@@ -14,7 +14,7 @@ function init() {
         gImgs.push(createImg(i));
     }
     // console.log(gImgs);
-    renderGallery();
+    renderGallery(gImgs);
 }
 
 function createImg(idx) {
@@ -55,10 +55,10 @@ function createImg(idx) {
     };
 }
 
-function renderGallery() {
+function renderGallery(images) {
     var strHtml = '';
-    for (let i = 0; i < gImgs.length; i++) {
-        strHtml += `<img src="${gImgs[i].url}" alt=""> \n`;
+    for (let i = 0; i < images.length; i++) {
+        strHtml += `<img src="${images[i].url}" alt=""> \n`;
     }
 
     strHtml += `<div class="box">
@@ -66,6 +66,13 @@ function renderGallery() {
                     <input type="file" class="file" name="image" onchange="onFileInputChange(event)" />
                 </div>`
     document.querySelector('.gallery').innerHTML = strHtml;
+}
+
+function onSearchImg() {
+    let searchKey = document.querySelector('#search').value;
+    searchKey = searchKey.toLowerCase();
+    let filters = filterImg(searchKey);
+    renderGallery(filters);
 }
 
 function onFileInputChange(ev) {

@@ -11,3 +11,14 @@ function handleImageFromInput(ev, onImageReady) {
     }
     reader.readAsDataURL(ev.target.files[0]);
 }
+
+function filterImg(key) {
+    return gImgs.filter(function (currImg) {
+        for (let i = 0; i < currImg.keywords.length; i++) {
+
+            let word = currImg.keywords[i];
+            if (word.indexOf(key) !== -1) return true;
+        }
+        return false;
+    });
+}
