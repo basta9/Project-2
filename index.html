@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,27 +8,29 @@
   <link rel="stylesheet" href="css/main.css">
   <title>Meme</title>
 </head>
+
 <body>
 
-<body onload="init()">
+  <body onload="init()">
 
-  <input type="file" name="image" onchange="onFileInputChange(event)" />
-    
-  <div class="publish-form-container"></div>
+    <input type="file" name="image" onchange="onFileInputChange(event)" />
 
-  <hr>
-  <br>
-  <canvas id="myCanvas" width="400" height="400" style="outline:1px solid green"></canvas>
-  
-  <br>
-  <a href="#" onclick="downloadImg(this)" download="my-img.jpg" >
-    Download as jpeg
-  </a>
-  
-  <br>
+    <div class="publish-form-container"></div>
 
-  <script src="js/upload-service.js"></script>
-  <script src="js/main.js"></script>
- 
-</body>
+    <hr>
+    <br>
+    <canvas id="myCanvas" width="400" height="400" style="outline:1px solid green"></canvas>
+
+    <br>
+    <a href="#" onclick="downloadImg(this)" download="my-img.jpg">
+      Download as jpeg
+    </a>
+
+    <br>
+
+    <script src="js/upload-service.js"></script>
+    <script src="js/main.js"></script>
+
+  </body>
+
 </html>
