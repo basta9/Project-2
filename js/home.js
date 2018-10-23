@@ -71,3 +71,24 @@ function renderGallery() {
 function onFileInputChange(ev) {
     handleImageFromInput(ev, renderCanvas)
 }
+
+function toggleMenu(ev) {
+    ev.stopPropagation();
+    document.body.classList.toggle('open');
+}
+
+function goToInTouch(ev) {
+    ev.stopPropagation();
+    console.log('get in touch');
+
+}
+function goToAbout(ev) {
+    ev.stopPropagation();
+    console.log('about');
+
+}
+function goToContact(ev) {
+    ev.stopPropagation();
+    console.log('contact');
+
+}
