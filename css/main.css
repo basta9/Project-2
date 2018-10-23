@@ -1,0 +1,35 @@
+body {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  .social-share-btn {
+    background: #4267b2;
+    border: 1px solid #4267b2;
+    color: #fff;
+    cursor: pointer;
+    font-family: Helvetica, Arial, sans-serif;
+    margin: 0;
+    user-select: none;
+    white-space: nowrap;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 11px;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .publish-btn {
+    background: #42b263;
+    border: 1px solid #42b263;
+    color: #fff;
+    cursor: pointer;
+    font-family: Helvetica, Arial, sans-serif;
+    margin: 0;
+    user-select: none;
+    white-space: nowrap;
+    padding: 5px 10px;
+    border-radius: 3px;
+    text-decoration: none;
+    /* display: inline-block; */
+  }
