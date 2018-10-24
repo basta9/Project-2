@@ -20,30 +20,27 @@ function init() {
     canvas = document.querySelector('#memeCanvas');
     setCanvasSize();
     ctx = canvas.getContext('2d');
-    
+
     elGallery = document.querySelector('.galleryWrap');
     
     renderGallery(gImgs);
-
 
 gUserInput = [{
     content: '',
     font_size: 0,
     color: '#ffffff',
     font_size: 16,
+    text_shadow: 0,
     coorX: 20,
-    coordY: 20
-},
-{
+    coordY: 50
+},{
     content: '',
     font_size: 0,
     color: '#ffffff',
     font_size: 16,
+    text_shadow: 0,
     coorX: 20,
-    coordY: canvas.height - 100
-}
-];
-
+    coordY: canvas.height - 100}];
 }
 
 //gonna be needed, when taking care of the responsive canvse
@@ -170,16 +167,44 @@ function openEditorOfMeme(elImg) {
 
 //this function takes care of each change done by the user
 function renderCanvas() {
-
+    
     var img = new Image();
     img.src = `img/${gCurrImg.id}.jpg`
     img.onload = function () {
 
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        
         ctx.font = `${gUserInput[0].font_size}px Arial`;
+        
+        if(gUserInput[0].text_shadow)   {
+            ctx.offsetX = 10;
+            ctx.offsetY = 10;
+            ctx.shadowColor = gUserInput[0].color;
+            ctx.shadowBlur = 20;
+        }else{
+            ctx.offsetX = 0;
+            ctx.offsetY = 0;
+            ctx.shadowColor = '';
+            ctx.shadowBlur = 0;
+        }
+       
         ctx.fillStyle = gUserInput[0].color;
         ctx.fillText(gUserInput[0].content, gUserInput[0].coorX, gUserInput[0].coordY);
+
         ctx.font = `${gUserInput[1].font_size}px Arial`;
+
+        if(gUserInput[1].text_shadow)  {
+            ctx.offsetX = 10;
+            ctx.offsetY = 10;
+            ctx.shadowColor = gUserInput[1].color;
+            ctx.shadowBlur = 20;
+        }else{
+            ctx.offsetX = 0;
+            ctx.offsetY = 0;
+            ctx.shadowColor = '';
+            ctx.shadowBlur = 0;
+        }
+
         ctx.fillStyle = gUserInput[1].color;
         ctx.fillText(gUserInput[1].content, gUserInput[1].coorX, gUserInput[1].coordY);
     }
@@ -197,8 +222,6 @@ function writeText(elInput) {
 }
 
 function updateFontSize(elInput) {
-    // console.log('elInput ',elInput.innerHTML);
-    // console.log('idx ',idx);
     var idx = elInput.getAttribute("data-input") - 1;
 
     if(elInput.innerHTML === '+' && gUserInput[idx].coorX < 1000)   gUserInput[idx].font_size += 10;
@@ -207,10 +230,26 @@ function updateFontSize(elInput) {
 }
 
 function updateFontColor(elInput) {
-
     var idx = elInput.getAttribute("data-inputColor") - 1;
     console.log('color is ',elInput.value,'index is ',idx);
     if(elInput.value)   gUserInput[idx].color = elInput.value;
+    renderCanvas();
+}
+
+function updateTextShadow(elInput){
+    var idx = elInput.getAttribute("data-checkBox") - 1;
+    // console.log('elInput.value',elInput.value);
+    console.log('I was clicked for line number', idx);
+
+    if(elInput.checked === true) {
+        console.log('check box was clicked for index number', idx);
+        gUserInput[idx].text_shadow = 1;
+    }
+    else {
+        console.log('check was removed for index number', idx);
+        gUserInput[idx].text_shadow = 0;
+    }
+
     renderCanvas();
 }
 
