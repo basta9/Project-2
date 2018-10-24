@@ -1,13 +1,16 @@
 'use strict';
 
 var gImgs;
-var elMemeEditor,elGallery;
-var canvas,ctx;
+var elMemeEditor, elGallery;
+var canvas, ctx;
 var gUserInput = [];
+var startX;
+var startY;
+var currEl = -1;
 
 var gCurrImg = {
     id: 0,
-    src:''
+    src: ''
 };
 
 function init() {
@@ -15,33 +18,105 @@ function init() {
     for (let i = 1; i < 26; i++) {
         gImgs.push(createImg(i));
     }
-    
+
     elMemeEditor = document.querySelector('.memeEditor');
     canvas = document.querySelector('#memeCanvas');
     setCanvasSize();
     ctx = canvas.getContext('2d');
 
     elGallery = document.querySelector('.galleryWrap');
-    
+
     renderGallery(gImgs);
 
-gUserInput = [{
-    content: '',
-    font_size: 0,
-    color: '#ffffff',
-    font_size: 16,
-    text_shadow: 0,
-    coorX: 20,
-    coordY: 50
-},{
-    content: '',
-    font_size: 0,
-    color: '#ffffff',
-    font_size: 16,
-    text_shadow: 0,
-    coorX: 20,
-    coordY: canvas.height - 100}];
+    gUserInput = [{
+        content: '',
+        font_size: 0,
+        color: '#ffffff',
+        font_size: 16,
+        text_shadow: 0,
+        x: 20,
+        y: 50
+    }, {
+        content: '',
+        font_size: 0,
+        color: '#ffffff',
+        font_size: 16,
+        text_shadow: 0,
+        x: 20,
+        y: canvas.height - 100
+    }];
+
+    // listen for mouse events
+    canvas.addEventListener("mousedown", function (ev) {
+        // console.log('down');
+        handleMouseDown(ev);
+    });
+    canvas.addEventListener('mousemove', function (ev) {
+        // console.log('move');
+        handleMouseMove(ev);
+    });
+    canvas.addEventListener('mouseup', function (ev) {
+        // console.log('up');
+        handleMouseUp(ev);
+    });
 }
+
+// ***********************************************************************
+
+function handleMouseDown(ev) {
+
+    let rect = canvas.getBoundingClientRect();
+    startX = ev.clientX - rect.left;
+    startY = ev.clientY - rect.top;
+    // console.log(startX, startY);
+
+    for (let i = 0; i < gUserInput.length; i++) {
+        // console.log(gUserInput[i].x, gUserInput[i].y);
+        if (elHit(startX, startY, i)) {
+            console.log('in');
+            currEl = i;
+            gUserInput[i].gapX = startX - gUserInput[i].x;
+            gUserInput[i].gapY = gUserInput[i].y - startY;
+        }
+    }
+}
+
+// done dragging
+function handleMouseUp(ev) {
+    if (currEl === -1) return;
+    // gUserInput[currEl].x = ev.clientX - gUserInput[currEl].gapX;
+    // gUserInput[currEl].y = ev.clientY - gUserInput[currEl].gapY;
+    currEl = -1;
+}
+
+
+function handleMouseMove(ev) {
+    if (currEl < 0) {
+        return;
+    }
+    let rect = canvas.getBoundingClientRect();
+    let mouseX = ev.clientX - rect.left;
+    let mouseY = ev.clientY - rect.top;
+
+    // Put your mousemove stuff here
+    let newX = mouseX - startX;
+    let newY = mouseY - startY;
+    startX = mouseX;
+    startY = mouseY;
+
+    let canvasEl = gUserInput[currEl];
+    canvasEl.x += newX;
+    canvasEl.y += newY;
+    renderCanvas();
+}
+
+function elHit(x, y, idx) {
+    var canvasEl = gUserInput[idx];
+    return (canvasEl.x <= x && x <= canvasEl.x + canvasEl.width
+        && canvasEl.y >= y && y >= canvasEl.y - canvasEl.font_size);
+}
+
+// ***********************************************************************
 
 //gonna be needed, when taking care of the responsive canvse
 function setCanvasSize() {
@@ -167,38 +242,38 @@ function openEditorOfMeme(elImg) {
 
 //this function takes care of each change done by the user
 function renderCanvas() {
-    
+
     var img = new Image();
     img.src = `img/${gCurrImg.id}.jpg`
     img.onload = function () {
 
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        
+
         ctx.font = `${gUserInput[0].font_size}px Arial`;
-        
-        if(gUserInput[0].text_shadow)   {
+
+        if (gUserInput[0].text_shadow) {
             ctx.offsetX = 10;
             ctx.offsetY = 10;
             ctx.shadowColor = gUserInput[0].color;
             ctx.shadowBlur = 20;
-        }else{
+        } else {
             ctx.offsetX = 0;
             ctx.offsetY = 0;
             ctx.shadowColor = '';
             ctx.shadowBlur = 0;
         }
-       
+
         ctx.fillStyle = gUserInput[0].color;
-        ctx.fillText(gUserInput[0].content, gUserInput[0].coorX, gUserInput[0].coordY);
+        ctx.fillText(gUserInput[0].content, gUserInput[0].x, gUserInput[0].y);
 
         ctx.font = `${gUserInput[1].font_size}px Arial`;
 
-        if(gUserInput[1].text_shadow)  {
+        if (gUserInput[1].text_shadow) {
             ctx.offsetX = 10;
             ctx.offsetY = 10;
             ctx.shadowColor = gUserInput[1].color;
             ctx.shadowBlur = 20;
-        }else{
+        } else {
             ctx.offsetX = 0;
             ctx.offsetY = 0;
             ctx.shadowColor = '';
@@ -206,7 +281,7 @@ function renderCanvas() {
         }
 
         ctx.fillStyle = gUserInput[1].color;
-        ctx.fillText(gUserInput[1].content, gUserInput[1].coorX, gUserInput[1].coordY);
+        ctx.fillText(gUserInput[1].content, gUserInput[1].x, gUserInput[1].y);
     }
 }
 
@@ -217,6 +292,7 @@ function showGallery() {
 
 function writeText(elInput) {
     var idx = elInput.getAttribute("data-idx");
+    gUserInput[idx - 1].width = ctx.measureText(elInput.value).width;
     gUserInput[idx - 1].content = elInput.value;
     renderCanvas();
 }
@@ -224,24 +300,24 @@ function writeText(elInput) {
 function updateFontSize(elInput) {
     var idx = elInput.getAttribute("data-input") - 1;
 
-    if(elInput.innerHTML === '+' && gUserInput[idx].coorX < 1000)   gUserInput[idx].font_size += 10;
-    else if(elInput.innerHTML === '-' && gUserInput[idx].coorX >= 20)  gUserInput[idx].font_size -= 10;
+    if (elInput.innerHTML === '+' && gUserInput[idx].x < 1000) gUserInput[idx].font_size += 10;
+    else if (elInput.innerHTML === '-' && gUserInput[idx].x >= 20) gUserInput[idx].font_size -= 10;
     renderCanvas();
 }
 
 function updateFontColor(elInput) {
     var idx = elInput.getAttribute("data-inputColor") - 1;
-    console.log('color is ',elInput.value,'index is ',idx);
-    if(elInput.value)   gUserInput[idx].color = elInput.value;
+    console.log('color is ', elInput.value, 'index is ', idx);
+    if (elInput.value) gUserInput[idx].color = elInput.value;
     renderCanvas();
 }
 
-function updateTextShadow(elInput){
+function updateTextShadow(elInput) {
     var idx = elInput.getAttribute("data-checkBox") - 1;
     // console.log('elInput.value',elInput.value);
     console.log('I was clicked for line number', idx);
 
-    if(elInput.checked === true) {
+    if (elInput.checked === true) {
         console.log('check box was clicked for index number', idx);
         gUserInput[idx].text_shadow = 1;
     }
@@ -253,7 +329,7 @@ function updateTextShadow(elInput){
     renderCanvas();
 }
 
-function downloadMeme(elLink){
+function downloadMeme(elLink) {
     // var can = document.querySelector('#memeCanvas');
     elLink.href = canvas.toDataURL();
     elLink.download = 'my_canvas.jpg';
