@@ -197,26 +197,19 @@ function onFileInputChange(ev) {
     handleImageFromInput(ev, renderCanvas)
 }
 
-function toggleMenu(ev) {
-    ev.stopPropagation();
-    document.body.classList.toggle('open');
-}
+// function toggleMenu(ev) {
+//     ev.stopPropagation();
+//     document.body.classList.toggle('open');
+// }
 
-function goToInTouch(ev) {
-    ev.stopPropagation();
-    console.log('get in touch');
-
-}
-function goToAbout(ev) {
-    ev.stopPropagation();
-    console.log('about');
-
-}
-function goToContact(ev) {
-    ev.stopPropagation();
-    console.log('contact');
-
-}
+// function goToAbout(ev) {
+//     ev.stopPropagation();
+//     window.location.href = 'about.html';
+// }
+// function goToContact(ev) {
+//     ev.stopPropagation();
+//     window.location.href = 'contact.html';
+// }
 
 function openEditorOfMeme(elImg) {
 
