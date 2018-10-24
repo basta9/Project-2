@@ -15,12 +15,11 @@
     <header>
         <div class="screen" onclick="toggleMenu(event)"></div>
         <section class="header-wraper container">
-            <div>
+            <div class="logo">
                 Meme Creator
             </div>
             <nav class="main-nav" onclick="toggleMenu(event)">
                 <ul class="nav-list">
-                    <li class="nav-item" onclick="goToInTouch(event)">Get in touch</li>
                     <li class="nav-item" onclick="goToAbout(event)">About</li>
                     <li class="nav-item" onclick="goToContact(event)">Contact</li>
                 </ul>
@@ -33,54 +32,60 @@
     </header>
     <main class="container">
         <section class="galleryWrap">
-        <h2>Choose a picture:</h2>
-        <div>
-            Search by category             
-            <select onchange="onSearchImg(this.value)">
-                <option value="">All</option>
-                <option value="happy">Happy</option>
-                <option value="kid">Kids</option>
-                <option value="funny">Funny</option>
-                <option value="evil">Evil</option>
-            </select> <br>
-            Search:<input type="search" id="search" onkeyup="onSearchImg()">
-        </div>
-        <section class="gallery">
+            <h2>Choose a picture:</h2>
+            <div>
+                Search by category
+                <select onchange="onSearchImg(this.value)">
+                    <option value="">All</option>
+                    <option value="happy">Happy</option>
+                    <option value="kid">Kids</option>
+                    <option value="funny">Funny</option>
+                    <option value="evil">Evil</option>
+                </select> <br>
+                Search:<input type="search" id="search" onkeyup="onSearchImg()">
+            </div>
+            <section class="gallery">
 
-        </section>
+            </section>
         </section>
         <section class="memeEditor" style="display: none;">
             <section class="editBtns">
-            <button onclick="showGallery()">Back To Gallery</button>
-            <nav>
-                <label>First line inputs
-                <input type="text" class="inpt-txt1" onkeyup="writeText(this)" data-idx = "1">
-                <button type="button" class="btn" onclick="updateFontSize(this)" data-input="1">+</button>
-                <button type="button" class="btn" onclick="updateFontSize(this)" data-input="1">-</button>
-                <label>
-                    <input type="checkbox" onclick="updateTextShadow(this)" data-checkBox = "1">
-                    Text Shadow
-                </label>
-                <input type="color" class="colorPicker" style="border: 0;" value="#fdffff" data-inputColor = "1" onchange="updateFontColor(this)">
-                </label>
-
-                <label>Second line inputs
-                <input type="text" class="inpt-txt2"  onkeyup="writeText(this)" data-idx = "2">
-                <button type="button" class="btn" onclick="updateFontSize(this)" data-input="2">+</button>
-                <button type="button" class="btn" onclick="updateFontSize(this)" data-input="2">-</button>
                 
-                <label >
-                    <input type="checkbox" onclick="updateTextShadow(this)" data-checkBox = "2">
-                    Text Shadow
-                </label>
+                <nav>
+                    <label>Edit Text
+                        <section>
+                          <input type="text" class="inpt-txt1" placeholder="Enter your text here" onkeyup="writeText(this)" data-idx="1">
+                          <button type="button" class="btn" onclick="updateFontSize(this)" data-input="1">+</button>
+                          <button type="button" class="btn" onclick="updateFontSize(this)" data-input="1">-</button>
+                        </section>
+                        <section>
+                        <label>
+                            <input type="checkbox" onclick="updateTextShadow(this)" data-checkBox="1">
+                            Text Shadow
+                        </label>
+                        <input type="color" class="colorPicker" style="border: 0;" value="#313131" data-inputColor="1"
+                            onchange="updateFontColor(this)">
+                        </section>
+                        <section>
+                            <i class="fas fa-align-left" onclick="alignText('left')"></i>
+                            <i class="fas fa-align-center" onclick="alignText('center')"></i>
+                            <i class="fas fa-align-right" onclick="alignText('right')"></i>
+                        </section>
 
-                <input type="color" class="colorPicker" style="border: 0;" value="#fdffff" data-inputColor = "2" onchange="updateFontColor(this)">
-                </label>
+                        <section>
+                                <button name="save" class="save"><a onclick="downloadMeme(this)">Save</a></button>
+                                <button onclick="showGallery()">Back To Gallery</button>
+                        </section>
+                    </label>
 
-                <button name = "save" class="save"><a onclick="downloadMeme(this)">Save</a></button>
-            </nav>
+                    
+                </nav>
             </section>
             <div class="canvasHolder"><canvas id="memeCanvas"></canvas></div>
+                <!-- onmousedown = "handleMouseDown(event)"
+                onmousemove = "handleMouseMove(event)"
+                onmouseup = "handleMouseUp(event)" -->
+                
         </section>
     </main>
     <script src="js/data.js"></script>

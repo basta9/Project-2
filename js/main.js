@@ -6,17 +6,91 @@ function init() {
     for (let i = 1; i < 26; i++) {
         gImgs.push(createImg(i));
     }
-    
+
     elMemeEditor = document.querySelector('.memeEditor');
     gCanvas = document.querySelector('#memeCanvas');
     
     setCanvasSize();
-    gCtx = gCanvas.getContext('2d');
 
+    gCtx = gCanvas.getContext('2d');
     elGallery = document.querySelector('.galleryWrap');
-    
+
     renderGallery(gImgs);
 }
+
+// ***********************************************************************
+
+function handleMouseDown(ev) {
+    
+    console.log('I am in here');
+    
+    let rect = gCanvas.getBoundingClientRect();
+    startX = ev.clientX - rect.left;
+    startY = ev.clientY - rect.top;
+    // console.log(startX, startY);
+
+    for (let i = 0; i < gMeme.txts.length; i++) {
+        // console.log(gUserInput[i].x, gUserInput[i].y);
+        if (elHit(startX, startY, i)) {
+            console.log('in');
+            currEl = i;
+            gMeme.txts[i].gapX = startX - gMeme.txts[i].x;
+            gMeme.txts[i].gapY = gMeme.txts[i].y - startY;
+        }
+    }
+}
+
+// done dragging
+function handleMouseUp(ev) {
+    if (currEl === -1) return;
+    else{
+        gMeme.txts[currEl].isActive = 0;
+        currEl = -1;
+    }   
+}
+
+function canvasStartingCoords(){
+
+    var  distance = gCanvas.getBoundingClientRect();
+    console.log('start coord rect',distance);
+
+    canvasStartingPointX = distance.left;
+    canvasStartingPointY = distance.top;
+
+    console.log('start coord x',distance.left);
+    console.log('start coord y',distance.top);
+    
+}
+
+
+function handleMouseMove(ev) {
+    if (currEl < 0) {
+        return;
+    }
+    let rect = gCanvas.getBoundingClientRect();
+    let mouseX = ev.clientX - rect.left;
+    let mouseY = ev.clientY - rect.top;
+
+    // Put your mousemove stuff here
+    let newX = mouseX - startX;
+    let newY = mouseY - startY;
+    startX = mouseX;
+    startY = mouseY;
+
+    // let canvasEl = gUserInput[currEl];
+    let canvasEl = gMeme.txts[currEl];
+    canvasEl.x += newX;
+    canvasEl.y += newY;
+    renderCanvas();
+}
+
+function elHit(x, y, idx) {
+    var canvasEl = gMeme.txt[idx];
+    return (canvasEl.x <= x && x <= canvasEl.x + canvasEl.width
+        && canvasEl.y >= y && y >= canvasEl.y - canvasEl.font_size);
+}
+
+// ***********************************************************************
 
 //gonna be needed, when taking care of the responsive canvse
 function setCanvasSize() {
@@ -95,12 +169,13 @@ function goToContact(ev) {
 function openEditorOfMeme(elImg) {
 
     gMeme.selectedImgId = +elImg.getAttribute("data-img");
-
+    
     //for tomorrow set a random width and height for the canvas upon the windows width & height
     //for niw it'll be .5 the window
     elMemeEditor.style.display = "flex";
     elGallery.style.display = "none";
-
+    canvasStartingCoords();
+    
     gMeme.memeImage.src = `img/${gMeme.selectedImgId}.jpg`;
 
     gMeme.memeImage.onload = function () {
@@ -114,48 +189,33 @@ function openEditorOfMeme(elImg) {
 
 //this function takes care of each change done by the user
 function renderCanvas() {
-    
+
     var img = new Image();
-    img.src = `img/${gMeme.selectedImgId}.jpg`
-    // img.onload = function () {
+    img.src = `img/${gMeme.selectedImgId}.jpg`;
 
-        gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
+    gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
+    
+    gCtx.font = `${gMeme.txts[0].bold} ${gMeme.txts[0].size}px Arial`;
+   
+    if(gMeme.txts[0].text_shadow)   {
+        gCtx.offsetX = 10;
+        gCtx.offsetY = 10;
+        gCtx.shadowColor = gMeme.txts[0].color;
+        gCtx.shadowBlur = 20;
+    }else{
+        gCtx.offsetX = 0;
+        gCtx.offsetY = 0;
+        gCtx.shadowColor = '';
+        gCtx.shadowBlur = 0;
+    }
+    gCtx.fillStyle = gMeme.txts[0].color;
+    gMeme.txts[0].y = (gCanvas.height+canvasStartingPointY) / 2;
+    gMeme.txts[0].x = (gCanvas.width+canvasStartingPointX) / 2;
+    gCtx.textAlign = gMeme.txts[0].alignText;
 
-        gCtx.font = `${gUserInput[0].font_size}px Arial`;
-        
-        if(gUserInput[0].text_shadow)   {
-            gCtx.offsetX = 10;
-            gCtx.offsetY = 10;
-            gCtx.shadowColor = gUserInput[0].color;
-            gCtx.shadowBlur = 20;
-        }else{
-            gCtx.offsetX = 0;
-            gCtx.offsetY = 0;
-            gCtx.shadowColor = '';
-            gCtx.shadowBlur = 0;
-        }
+    gCtx.fillText(gMeme.txts[0].line, gMeme.txts[0].x, gMeme.txts[0].y);
        
-        gCtx.fillStyle = gUserInput[0].color;
-        gCtx.fillText(gUserInput[0].content, gUserInput[0].coorX, gUserInput[0].coordY);
-
-        gCtx.font = `${gUserInput[1].font_size}px Arial`;
-
-        if(gUserInput[1].text_shadow)  {
-            gCtx.offsetX = 10;
-            gCtx.offsetY = 10;
-            gCtx.shadowColor = gUserInput[1].color;
-            gCtx.shadowBlur = 20;
-        }else{
-            gCtx.offsetX = 0;
-            gCtx.offsetY = 0;
-            gCtx.shadowColor = '';
-            gCtx.shadowBlur = 0;
-        }
-
-        gCtx.fillStyle = gUserInput[1].color;
-        gCtx.fillText(gUserInput[1].content, gUserInput[1].coorX, gUserInput[1].coordY);
-    // }
-}
+    }
 
 function showGallery() {
     elMemeEditor.style.display = "none";
@@ -164,44 +224,51 @@ function showGallery() {
 
 function writeText(elInput) {
     var idx = elInput.getAttribute("data-idx");
-    gUserInput[idx - 1].content = elInput.value;
+    gMeme.txts[idx - 1].width = gCtx.measureText(elInput.value).width;
+    gMeme.txts[idx - 1].line = elInput.value;
     renderCanvas();
 }
 
 function updateFontSize(elInput) {
     var idx = elInput.getAttribute("data-input") - 1;
 
-    if(elInput.innerHTML === '+' && gUserInput[idx].coorX < 1000)   gUserInput[idx].font_size += 10;
-    else if(elInput.innerHTML === '-' && gUserInput[idx].coorX >= 20)  gUserInput[idx].font_size -= 10;
+    if (elInput.innerHTML === '+' && gMeme.txts[idx].x < 1000) gMeme.txts[idx].size += 10;
+    else if (elInput.innerHTML === '-' && gMeme.txts[idx].x >= 20) gMeme.txts[idx].size -= 10;
     renderCanvas();
 }
 
 function updateFontColor(elInput) {
     var idx = elInput.getAttribute("data-inputColor") - 1;
-    console.log('color is ',elInput.value,'index is ',idx);
-    if(elInput.value)   gUserInput[idx].color = elInput.value;
+    console.log('color is ', elInput.value, 'index is ', idx);
+    if (elInput.value) gMeme.txts[idx].color = elInput.value;
     renderCanvas();
 }
 
-function updateTextShadow(elInput){
+function updateTextShadow(elInput) {
     var idx = elInput.getAttribute("data-checkBox") - 1;
     // console.log('elInput.value',elInput.value);
     console.log('I was clicked for line number', idx);
 
-    if(elInput.checked === true) {
+    if (elInput.checked === true) {
         console.log('check box was clicked for index number', idx);
-        gUserInput[idx].text_shadow = 1;
+        gMeme.txts[idx].text_shadow = 1;
     }
     else {
         console.log('check was removed for index number', idx);
-        gUserInput[idx].text_shadow = 0;
+        gMeme.txts[idx].text_shadow = 0;
     }
 
     renderCanvas();
 }
 
-function downloadMeme(elLink){
+function downloadMeme(elLink) {
     // var can = document.querySelector('#memeCanvas');
     elLink.href = gCanvas.toDataURL();
     elLink.download = 'my_canvas.jpg';
+}
+
+function alignText(direction){
+    console.log('I was clicked to the ',direction);
+    gMeme.txts[0].alignText = direction;
+    renderCanvas();
 }

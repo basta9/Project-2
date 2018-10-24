@@ -1,23 +1,30 @@
+'use strict'
+
 var gMeme = {
 
     selectedImgId: 1,
     txts: [{
         line: '',
         size: 20,
-        family: 'impact',
-        text_shadow:1,
+        family: 'Impact',
+        text_shadow: 0,
         align: 'left',
-        color: 'red',
-        coorX: 50,
-        coordY: 50
+        color: '#313131',
+        width: 0,
+        bold: 1,
+        x: 50,
+        y: 50,
+        isActive:0
     }],
     memeImage:new Image()
 }
 
-var gImgs;
+var canvasStartingPointX,canvasStartingPointY;
+
+var gImgs,currEl;
 
 var elMemeEditor,elGallery;
-var gCanvas,gCtx;
+var gCanvas,gCtx,startX,startY;
 var gUserInput = [];
 
 var gCurrImg = {
@@ -50,6 +57,4 @@ var keyWords = [
     'lord of the rings, chill', //22
     'oprah, happy', //23
     'star trek, laugh, joke', //24
-    'potin, politic', //25
-
-];
+    'potin, politic'];
