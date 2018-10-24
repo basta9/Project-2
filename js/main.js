@@ -1,32 +1,13 @@
 'use strict';
 
 var gImgs;
-
-var elMemeEditor = document.querySelector('.memeEditor');
-var elGallery = document.querySelector('.galleryWrap');
-var canvas = document.querySelector('canvas');
-var ctx = canvas.getContext('2d');
-
-var gUserInput = [{
-        content: '',
-        font_size: 0,
-        color: '#000',
-        font_size: 16,
-        coorX: 20,
-        coordY: 20
-    },
-    {
-        content: '',
-        font_size: 0,
-        color: '#000',
-        font_size: 16,
-        coorX: 20,
-        coordY: canvas.height - 100
-    }
-];
+var elMemeEditor,elGallery;
+var canvas,ctx;
+var gUserInput = [];
 
 var gCurrImg = {
-    id: 0
+    id: 0,
+    src:''
 };
 
 function init() {
@@ -34,8 +15,35 @@ function init() {
     for (let i = 1; i < 26; i++) {
         gImgs.push(createImg(i));
     }
-    renderGallery(gImgs);
+    
+    elMemeEditor = document.querySelector('.memeEditor');
+    canvas = document.querySelector('#memeCanvas');
     setCanvasSize();
+    ctx = canvas.getContext('2d');
+    
+    elGallery = document.querySelector('.galleryWrap');
+    
+    renderGallery(gImgs);
+
+
+gUserInput = [{
+    content: '',
+    font_size: 0,
+    color: '#ffffff',
+    font_size: 16,
+    coorX: 20,
+    coordY: 20
+},
+{
+    content: '',
+    font_size: 0,
+    color: '#ffffff',
+    font_size: 16,
+    coorX: 20,
+    coordY: canvas.height - 100
+}
+];
+
 }
 
 //gonna be needed, when taking care of the responsive canvse
@@ -141,6 +149,7 @@ function goToContact(ev) {
 function openEditorOfMeme(elImg) {
 
     gCurrImg.id = elImg.getAttribute("data-img");
+    gCurrImg.src = `img/${gCurrImg.id}.jpg`;
 
     //for tomorrow set a random width and height for the canvas upon the windows width & height
     //for niw it'll be .5 the window
@@ -161,6 +170,7 @@ function openEditorOfMeme(elImg) {
 
 //this function takes care of each change done by the user
 function renderCanvas() {
+
     var img = new Image();
     img.src = `img/${gCurrImg.id}.jpg`
     img.onload = function () {
@@ -204,7 +214,7 @@ function updateFontColor(elInput) {
     renderCanvas();
 }
 
-function downloadMeme(){
+function downloadMeme(elLink){
     // var can = document.querySelector('#memeCanvas');
     elLink.href = canvas.toDataURL();
     elLink.download = 'my_canvas.jpg';
