@@ -1,53 +1,28 @@
 'use strict';
 
-var gImgs;
-var elMemeEditor,elGallery;
-var canvas,ctx;
-var gUserInput = [];
-
-var gCurrImg = {
-    id: 0,
-    src:''
-};
-
 function init() {
     gImgs = [];
+    
     for (let i = 1; i < 26; i++) {
         gImgs.push(createImg(i));
     }
     
     elMemeEditor = document.querySelector('.memeEditor');
-    canvas = document.querySelector('#memeCanvas');
+    gCanvas = document.querySelector('#memeCanvas');
+    
     setCanvasSize();
-    ctx = canvas.getContext('2d');
+    gCtx = gCanvas.getContext('2d');
 
     elGallery = document.querySelector('.galleryWrap');
     
     renderGallery(gImgs);
-
-gUserInput = [{
-    content: '',
-    font_size: 0,
-    color: '#ffffff',
-    font_size: 16,
-    text_shadow: 0,
-    coorX: 20,
-    coordY: 50
-},{
-    content: '',
-    font_size: 0,
-    color: '#ffffff',
-    font_size: 16,
-    text_shadow: 0,
-    coorX: 20,
-    coordY: canvas.height - 100}];
 }
 
 //gonna be needed, when taking care of the responsive canvse
 function setCanvasSize() {
 
-    canvas.width = 500;
-    canvas.height = 500;
+    gCanvas.width = 500;
+    gCanvas.height = 500;
 
     // canvas.width = window.innerWidth / 2;
     // canvas.height = window.innerHeight / 2;
@@ -56,35 +31,7 @@ function setCanvasSize() {
 }
 
 function createImg(idx) {
-    let keyWords = [
-        'kiss,love,boxing,box', //1
-        'view,dance,dancing,happy', //2
-        'trump,politic,rabbit', //3
-        'cute, dogs, love', //4
-        'succes, win, kid', //5
-        'cute, dog, baby', //6
-        'cat, sleep, work', //7
-        'funny,satisfied', //8
-        'kid,cheeky,evil', //9
-        'explain, so-so', //10
-        'evil, quote, funny', //11
-        'haim, you', //12
-        'dance, africa, kids', //13
-        'toy, pixar, explain', //14
-        'obama, funny, smile', //15
-        'funny, dog, drag', //16
-        'baby, funny, happy', //17
-        'trump, win, funny', //18
-        'surprise, you', //19
-        'leo , cheers', //20
-        'matrix, cool', //21
-        'lord of the rings, chill', //22
-        'oprah, happy', //23
-        'star trek, laugh, joke', //24
-        'potin, politic', //25
-
-    ];
-
+    
     let currWords = keyWords[idx - 1].split(',');
     return {
         id: idx,
@@ -94,8 +41,10 @@ function createImg(idx) {
 }
 
 function renderGallery(images) {
+
     var strHtml = '';
     for (let i = 0; i < images.length; i++) {
+
         strHtml += `<img src="${images[i].url}" 
         alt="image of ${images[i].keywords[0]}"  
         data-img = '${images[i].id}'
@@ -105,7 +54,7 @@ function renderGallery(images) {
     strHtml += `<div class="box">
                     <img src="img/add-pic.png" alt=""> 
                     <input type="file" class="file" name="image" onchange="onFileInputChange(event)" />
-                </div>`
+                </div>`            
     document.querySelector('.gallery').innerHTML = strHtml;
 }
 
@@ -145,23 +94,21 @@ function goToContact(ev) {
 
 function openEditorOfMeme(elImg) {
 
-    gCurrImg.id = elImg.getAttribute("data-img");
-    gCurrImg.src = `img/${gCurrImg.id}.jpg`;
+    gMeme.selectedImgId = +elImg.getAttribute("data-img");
 
     //for tomorrow set a random width and height for the canvas upon the windows width & height
     //for niw it'll be .5 the window
     elMemeEditor.style.display = "flex";
     elGallery.style.display = "none";
 
-    var img = new Image();
-    img.src = `img/${gCurrImg.id}.jpg`
-    img.onload = function () {
+    gMeme.memeImage.src = `img/${gMeme.selectedImgId}.jpg`;
+
+    gMeme.memeImage.onload = function () {
         // var width = img.height;
         // var height = img.width;
         // canvas.width = 500;
         // canvas.height = 500;
-
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+        gCtx.drawImage(gMeme.memeImage, 0, 0, gCanvas.width, gCanvas.height)
     }
 }
 
@@ -169,45 +116,45 @@ function openEditorOfMeme(elImg) {
 function renderCanvas() {
     
     var img = new Image();
-    img.src = `img/${gCurrImg.id}.jpg`
-    img.onload = function () {
+    img.src = `img/${gMeme.selectedImgId}.jpg`
+    // img.onload = function () {
 
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        
-        ctx.font = `${gUserInput[0].font_size}px Arial`;
+        gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
+
+        gCtx.font = `${gUserInput[0].font_size}px Arial`;
         
         if(gUserInput[0].text_shadow)   {
-            ctx.offsetX = 10;
-            ctx.offsetY = 10;
-            ctx.shadowColor = gUserInput[0].color;
-            ctx.shadowBlur = 20;
+            gCtx.offsetX = 10;
+            gCtx.offsetY = 10;
+            gCtx.shadowColor = gUserInput[0].color;
+            gCtx.shadowBlur = 20;
         }else{
-            ctx.offsetX = 0;
-            ctx.offsetY = 0;
-            ctx.shadowColor = '';
-            ctx.shadowBlur = 0;
+            gCtx.offsetX = 0;
+            gCtx.offsetY = 0;
+            gCtx.shadowColor = '';
+            gCtx.shadowBlur = 0;
         }
        
-        ctx.fillStyle = gUserInput[0].color;
-        ctx.fillText(gUserInput[0].content, gUserInput[0].coorX, gUserInput[0].coordY);
+        gCtx.fillStyle = gUserInput[0].color;
+        gCtx.fillText(gUserInput[0].content, gUserInput[0].coorX, gUserInput[0].coordY);
 
-        ctx.font = `${gUserInput[1].font_size}px Arial`;
+        gCtx.font = `${gUserInput[1].font_size}px Arial`;
 
         if(gUserInput[1].text_shadow)  {
-            ctx.offsetX = 10;
-            ctx.offsetY = 10;
-            ctx.shadowColor = gUserInput[1].color;
-            ctx.shadowBlur = 20;
+            gCtx.offsetX = 10;
+            gCtx.offsetY = 10;
+            gCtx.shadowColor = gUserInput[1].color;
+            gCtx.shadowBlur = 20;
         }else{
-            ctx.offsetX = 0;
-            ctx.offsetY = 0;
-            ctx.shadowColor = '';
-            ctx.shadowBlur = 0;
+            gCtx.offsetX = 0;
+            gCtx.offsetY = 0;
+            gCtx.shadowColor = '';
+            gCtx.shadowBlur = 0;
         }
 
-        ctx.fillStyle = gUserInput[1].color;
-        ctx.fillText(gUserInput[1].content, gUserInput[1].coorX, gUserInput[1].coordY);
-    }
+        gCtx.fillStyle = gUserInput[1].color;
+        gCtx.fillText(gUserInput[1].content, gUserInput[1].coorX, gUserInput[1].coordY);
+    // }
 }
 
 function showGallery() {
@@ -255,6 +202,6 @@ function updateTextShadow(elInput){
 
 function downloadMeme(elLink){
     // var can = document.querySelector('#memeCanvas');
-    elLink.href = canvas.toDataURL();
+    elLink.href = gCanvas.toDataURL();
     elLink.download = 'my_canvas.jpg';
 }

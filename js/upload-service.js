@@ -6,14 +6,14 @@ var SHARE_URL = 'http://ca-upload.com/api/v1.0/upload/serveForShare.php?id='
 function uploadImg(elForm, ev) {
     ev.preventDefault();
 
-    document.getElementById('imgData').value = canvas.toDataURL("image/jpeg");
+    document.getElementById('imgData').value = gCanvas.toDataURL("image/jpeg");
    
     // A function to be called if request succeeds
     function onSuccess(uploadedImgId) {
         console.log('uploadedImgId', uploadedImgId);
 
         var urlForShare = SHARE_URL + uploadedImgId;
-        //var imgUrl      = UPLOADED_IMG_URL + uploadedImgId;
+        //var imgUrl = UPLOADED_IMG_URL + uploadedImgId;
 
         urlForShare = encodeURIComponent(urlForShare)
         document.querySelector('.share-container').innerHTML = `
