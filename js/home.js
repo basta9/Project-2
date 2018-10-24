@@ -68,8 +68,10 @@ function renderGallery(images) {
     document.querySelector('.gallery').innerHTML = strHtml;
 }
 
-function onSearchImg() {
-    let searchKey = document.querySelector('#search').value;
+function onSearchImg(searchKey) {
+    if (!searchKey) {
+        searchKey = document.querySelector('#search').value;
+    }
     searchKey = searchKey.toLowerCase();
     let filters = filterImg(searchKey);
     renderGallery(filters);

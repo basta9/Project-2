@@ -33,7 +33,17 @@
     </header>
     <main class="container">
         <h2>Choose a picture:</h2>
-        <div>Search:<input type="search" id="search" onkeyup="onSearchImg()"></div>
+        <div>
+            Search by category             
+            <select onchange="onSearchImg(this.value)">
+                <option value="">All</option>
+                <option value="happy">Happy</option>
+                <option value="kid">Kids</option>
+                <option value="funny">Funny</option>
+                <option value="evil">Evil</option>
+            </select> <br>
+            Search:<input type="search" id="search" onkeyup="onSearchImg()">
+        </div>
         <section class="gallery">
 
         </section>
