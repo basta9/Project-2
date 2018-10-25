@@ -4,6 +4,9 @@
 function goToMain(ev) {
     ev.stopPropagation();
     window.location.href = 'index.html';
+    elMemeEditor.style.display = "none";
+    elGallery.style.display = "block";
+    canvas.style,display = 'none';
 }
 
 function toggleMenu(ev) {
