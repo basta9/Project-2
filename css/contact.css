@@ -31,3 +31,14 @@ a > i{
     font-size: 20px;
     color: white;
 }
+
+.cont-wrap{
+display: flex;
+justify-content: space-around;
+align-items: center;
+}
+
+.cont-wrap > img{
+    width: 200px;
+    height: 200px;
+}

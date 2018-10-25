@@ -50,42 +50,46 @@
         </section>
         <section class="memeEditor" style="display: none;">
             <section class="editBtns">
-                
+
                 <nav>
-                    <label>Edit Text
-                        <section>
-                          <input type="text" class="inpt-txt1" placeholder="Enter your text here" onkeyup="writeText(this)" data-idx="1">
-                          <button type="button" class="btn" onclick="updateFontSize(this)" data-input="1">+</button>
-                          <button type="button" class="btn" onclick="updateFontSize(this)" data-input="1">-</button>
-                        </section>
-                        <section>
-                        <label>
-                            <input type="checkbox" onclick="updateTextShadow(this)" data-checkBox="1">
-                            Text Shadow
-                        </label>
-                        <input type="color" class="colorPicker" style="border: 0;" value="#313131" data-inputColor="1"
-                            onchange="updateFontColor(this)">
-                        </section>
-                        <section>
+                    <form>Edit Text
+                        <div>
+                            <input type="text" class="inpt-txt1" placeholder="Enter your text here" onkeyup="writeText(this)"
+                                data-idx="1">
+                            <button type="button" class="btn" onclick="updateFontSize(this)" data-input="1">+</button>
+                            <button type="button" class="btn" onclick="updateFontSize(this)" data-input="1">-</button>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" onclick="updateTextShadow(this)" data-checkBox="1">
+                                Text Shadow
+                            </label>
+                            <input type="color" class="colorPicker" style="border: 0;" value="#313131" data-inputColor="1"
+                                onchange="updateFontColor(this)">
+                        </div>
+                        <div>
                             <i class="fas fa-align-left" onclick="alignText('left')"></i>
                             <i class="fas fa-align-center" onclick="alignText('center')"></i>
                             <i class="fas fa-align-right" onclick="alignText('right')"></i>
-                        </section>
+                        </div>
 
-                        <section>
-                                <button name="save" class="save"><a onclick="downloadMeme(this)">Save</a></button>
-                                <button onclick="showGallery()">Back To Gallery</button>
-                        </section>
-                    </label>
+                        <div>
+                            <button name="save" class="save"><a onclick="downloadMeme(this)">Save</a></button>
+                            <button onclick="showGallery()">Back To Gallery</button>
+                        </div>
+                    </form>
 
-                    
+
                 </nav>
             </section>
-            <div class="canvasHolder"><canvas id="memeCanvas"></canvas></div>
-                <!-- onmousedown = "handleMouseDown(event)"
+            <div class="canvasHolder">
+                <canvas id="memeCanvas" onmousedown="handleMouseDown(event)" onmousemove="handleMouseMove(event)"
+                    onmouseup="handleMouseUp(event)"></canvas>
+            </div>
+            <!-- onmousedown = "handleMouseDown(event)"
                 onmousemove = "handleMouseMove(event)"
                 onmouseup = "handleMouseUp(event)" -->
-                
+            <footer></footer>
         </section>
     </main>
     <script src="js/data.js"></script>

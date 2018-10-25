@@ -3,7 +3,6 @@
 @import 'fotter.css';
 @import 'base.css';
 
-footer{position: relative;}
 
 /* HELPERS */
 
@@ -71,6 +70,15 @@ cursor: pointer;
 cursor: pointer;
 }
 
+/* MEME */
+
+form{
+width: 100%;
+}
+
+form > div{
+width: 100%;
+}
 
 .memeEditor{
     display: flex;
@@ -86,10 +94,27 @@ cursor: pointer;
     align-items: center;
     justify-content: center;
     background-color: #a45f5f;
-    height: 5%;
+    height: 100%;
   }
+
+
+  /* CANVAS */
   .canvasHolder{
-      width: 60%;
+      width: 100%
+    }
+    
+    @media (min-width: 600px){
+        
+        .memeEditor{
+            flex-direction: row;
+            }
+        .canvasHolder{
+    width: 60%;
+        }  
+}
+
+  canvas{
+      width: 100%;
   }
 
   a {
@@ -99,10 +124,6 @@ cursor: pointer;
     text-decoration: none;
   }
 
-  footer{
-      background-color: rgb(175, 196, 84);
-      height: 100px;
-  }
 
   nav{
     display: flex;
@@ -127,3 +148,11 @@ cursor: pointer;
   width: 32px;
   height: 32px;
   }
+
+  /* FOOTER */
+  /* footer{position: relative;} */
+  
+  /* footer{
+    background-color: rgb(175, 196, 84);
+    height: 100px;
+} */

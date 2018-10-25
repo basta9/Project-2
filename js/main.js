@@ -2,14 +2,14 @@
 
 function init() {
     gImgs = [];
-    
+
     for (let i = 1; i < 26; i++) {
         gImgs.push(createImg(i));
     }
 
     elMemeEditor = document.querySelector('.memeEditor');
     gCanvas = document.querySelector('#memeCanvas');
-    
+
     setCanvasSize();
 
     gCtx = gCanvas.getContext('2d');
@@ -21,17 +21,17 @@ function init() {
 // ***********************************************************************
 
 function handleMouseDown(ev) {
-    
-    console.log('I am in here');
-    
+    // console.log('I am in here');
+
     let rect = gCanvas.getBoundingClientRect();
     startX = ev.clientX - rect.left;
     startY = ev.clientY - rect.top;
-    // console.log(startX, startY);
+    console.log(startX, startY);
 
     for (let i = 0; i < gMeme.txts.length; i++) {
         // console.log(gUserInput[i].x, gUserInput[i].y);
         if (elHit(startX, startY, i)) {
+            gIsClicked = true;
             console.log('in');
             currEl = i;
             gMeme.txts[i].gapX = startX - gMeme.txts[i].x;
@@ -43,28 +43,29 @@ function handleMouseDown(ev) {
 // done dragging
 function handleMouseUp(ev) {
     if (currEl === -1) return;
-    else{
+    else {
         gMeme.txts[currEl].isActive = 0;
         currEl = -1;
-    }   
+    }
+    gIsClicked = false;
 }
 
-function canvasStartingCoords(){
+function canvasStartingCoords() {
 
-    var  distance = gCanvas.getBoundingClientRect();
-    console.log('start coord rect',distance);
+    var distance = gCanvas.getBoundingClientRect();
+    console.log('start coord rect', distance);
 
     canvasStartingPointX = distance.left;
     canvasStartingPointY = distance.top;
 
-    console.log('start coord x',distance.left);
-    console.log('start coord y',distance.top);
-    
+    console.log('start coord x', distance.left);
+    console.log('start coord y', distance.top);
+
 }
 
 
 function handleMouseMove(ev) {
-    if (currEl < 0) {
+    if (currEl < 0 || !gIsClicked) {
         return;
     }
     let rect = gCanvas.getBoundingClientRect();
@@ -85,7 +86,7 @@ function handleMouseMove(ev) {
 }
 
 function elHit(x, y, idx) {
-    var canvasEl = gMeme.txt[idx];
+    var canvasEl = gMeme.txts[idx];
     return (canvasEl.x <= x && x <= canvasEl.x + canvasEl.width
         && canvasEl.y >= y && y >= canvasEl.y - canvasEl.font_size);
 }
@@ -105,7 +106,7 @@ function setCanvasSize() {
 }
 
 function createImg(idx) {
-    
+
     let currWords = keyWords[idx - 1].split(',');
     return {
         id: idx,
@@ -128,7 +129,7 @@ function renderGallery(images) {
     strHtml += `<div class="box">
                     <img src="img/add-pic.png" alt=""> 
                     <input type="file" class="file" name="image" onchange="onFileInputChange(event)" />
-                </div>`            
+                </div>`
     document.querySelector('.gallery').innerHTML = strHtml;
 }
 
@@ -162,13 +163,13 @@ function onFileInputChange(ev) {
 function openEditorOfMeme(elImg) {
 
     gMeme.selectedImgId = +elImg.getAttribute("data-img");
-    
+
     //for tomorrow set a random width and height for the canvas upon the windows width & height
     //for niw it'll be .5 the window
     elMemeEditor.style.display = "flex";
     elGallery.style.display = "none";
     canvasStartingCoords();
-    
+
     gMeme.memeImage.src = `img/${gMeme.selectedImgId}.jpg`;
 
     gMeme.memeImage.onload = function () {
@@ -187,28 +188,28 @@ function renderCanvas() {
     img.src = `img/${gMeme.selectedImgId}.jpg`;
 
     gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
-    
+
     gCtx.font = `${gMeme.txts[0].bold} ${gMeme.txts[0].size}px Arial`;
-   
-    if(gMeme.txts[0].text_shadow)   {
+
+    if (gMeme.txts[0].text_shadow) {
         gCtx.offsetX = 10;
         gCtx.offsetY = 10;
         gCtx.shadowColor = gMeme.txts[0].color;
         gCtx.shadowBlur = 20;
-    }else{
+    } else {
         gCtx.offsetX = 0;
         gCtx.offsetY = 0;
         gCtx.shadowColor = '';
         gCtx.shadowBlur = 0;
     }
     gCtx.fillStyle = gMeme.txts[0].color;
-    gMeme.txts[0].y = (gCanvas.height+canvasStartingPointY) / 2;
-    gMeme.txts[0].x = (gCanvas.width+canvasStartingPointX) / 2;
+    gMeme.txts[0].y = (gCanvas.height + canvasStartingPointY) / 2;
+    gMeme.txts[0].x = (gCanvas.width + canvasStartingPointX) / 2;
     gCtx.textAlign = gMeme.txts[0].alignText;
 
     gCtx.fillText(gMeme.txts[0].line, gMeme.txts[0].x, gMeme.txts[0].y);
-       
-    }
+
+}
 
 function showGallery() {
     elMemeEditor.style.display = "none";
@@ -260,8 +261,8 @@ function downloadMeme(elLink) {
     elLink.download = 'my_canvas.jpg';
 }
 
-function alignText(direction){
-    console.log('I was clicked to the ',direction);
+function alignText(direction) {
+    console.log('I was clicked to the ', direction);
     gMeme.txts[0].alignText = direction;
     renderCanvas();
 }

@@ -14,22 +14,23 @@ var gMeme = {
         bold: 1,
         x: 50,
         y: 50,
-        isActive:0
+        isActive: 0
     }],
-    memeImage:new Image()
+    memeImage: new Image()
 }
 
-var canvasStartingPointX,canvasStartingPointY;
+var canvasStartingPointX, canvasStartingPointY;
 
-var gImgs,currEl;
+var gImgs, currEl;
 
-var elMemeEditor,elGallery;
-var gCanvas,gCtx,startX,startY;
+var elMemeEditor, elGallery;
+var gIsClicked = false;
+var gCanvas, gCtx, startX, startY;
 var gUserInput = [];
 
 var gCurrImg = {
     id: 0,
-    src:''
+    src: ''
 };
 
 var keyWords = [
