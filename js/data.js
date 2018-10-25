@@ -22,13 +22,6 @@ var gMeme = {
 var gImgs, gCurrEl, gCurrLine = 0;
 var gElMemeEditor, gElGallery;
 var gCanvas, gCtx, gHoldImg;
-//  gStartX, gStartY;
-var gUserInput = [];
-
-var gCurrImg = {
-    id: 0,
-    src: ''
-};
 
 var gKeywords = [
     'kiss,love,boxing,box', //1
