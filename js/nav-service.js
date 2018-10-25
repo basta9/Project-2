@@ -7,7 +7,9 @@ function goToMain(ev) {
 }
 
 function toggleMenu(ev) {
-    ev.stopPropagation();
+    if (ev) {
+        ev.stopPropagation();
+    }
     document.body.classList.toggle('open');
 }
 function goToContact(ev) {
@@ -18,4 +20,13 @@ function goToContact(ev) {
 function goToAbout(ev) {
     ev.stopPropagation();
     window.location.href = 'about.html';
+}
+
+function showGallery(ev) {
+    if (ev) {
+        ev.stopPropagation();
+    }
+    // toggleMenu();
+    elMemeEditor.style.display = "none";
+    elGallery.style.display = "block";
 }

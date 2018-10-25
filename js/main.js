@@ -1,10 +1,10 @@
 'use strict';
 
 function init() {
-    
+
     createImages();
     renderGallery(gImgs);
-    
+
     elMemeEditor = document.querySelector('.memeEditor');
     gCanvas = document.querySelector('#memeCanvas');
     gCtx = gCanvas.getContext('2d');
@@ -13,11 +13,14 @@ function init() {
     setCanvasSize();
 }
 
-function renderGallery() {
+function renderGallery(images) {
+    //for searching
+    if (!images) {
+        images = gImgs;
+    }
 
-    var strHtml = '',images = gImgs;
-
-    strHtml = images.map(function(img,idx){
+    var strHtml = ''
+    strHtml = images.map(function (img, idx) {
         return `<img src="${img.url}" 
         alt="image of ${img.keywords[0]}"  
         data-img = '${img.id}'
@@ -27,16 +30,10 @@ function renderGallery() {
     strHtml = strHtml.join('');
     strHtml += `<div class="box">
                     <img src="img/add-pic.png" alt=""> 
-                    <input type="file" class="file" name="image" onchange="onFileInputChange(event)" />
+                    <input type="file" class="file" name="image" onchange="handleImageFromInput(event)" />
                 </div>`
 
     document.querySelector('.gallery').innerHTML = strHtml;
-}
-
-
-function showGallery() {
-    elMemeEditor.style.display = "none";
-    elGallery.style.display = "block";
 }
 
 function onSearchImg(searchKey) {
