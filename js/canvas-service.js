@@ -18,6 +18,7 @@ function createLine(lineText) {
 }
 
 function addLine(txt) {
+
     gMeme.txts.push(createLine(txt));
 
     if(gMeme.txts.length === 1) gMeme.txts[0].y = 25;
@@ -31,12 +32,6 @@ function deleteLine(lineId) {
         gMeme.txts.splice(lineId, 1);
         saveToStorage(KEY_gMEM, gMeme);
     }
-
-    // var lineIdx = gMeme.txts.findIndex(function(line,idx){
-    //     return idx === lineId;
-    // })
-    // gMeme.txts.splice(lineIdx, 1);
-    // saveToStorage(KEY_gMEM, gMeme);
 }
 
 function getTxtsCount() {

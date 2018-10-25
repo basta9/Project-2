@@ -48,6 +48,7 @@ function renderCanvas() {
 }
 
 function onAdding(){
+
     var text = document.querySelector('.inputText');
     text.value = '';
     text.style.backgroundColor = "yellow";

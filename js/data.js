@@ -18,9 +18,7 @@ var gMeme = {
     }],
     memeImage:new Image()
 }
-/*
 
-*/
 var gImgs,currEl,currLine = 0;
 
 var elMemeEditor,elGallery;
