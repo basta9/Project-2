@@ -12,28 +12,16 @@ var gMeme = {
         color: '#313131',
         width: 0,
         bold: 1,
-<<<<<<< HEAD
-        x: 50,
-        y: 50,
-        isActive: 0
-=======
         x: 5,
         y: 25,
         isActive:0
->>>>>>> 5dd92dd93bffe01725bcaac255205bf1114c449f
     }],
     memeImage: new Image()
 }
 /*
 
-<<<<<<< HEAD
-var canvasStartingPointX, canvasStartingPointY;
-
-var gImgs, currEl;
-=======
 */
 var gImgs,currEl,currLine = 0;
->>>>>>> 5dd92dd93bffe01725bcaac255205bf1114c449f
 
 var elMemeEditor, elGallery;
 var gIsClicked = false;

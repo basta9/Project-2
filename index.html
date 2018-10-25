@@ -11,6 +11,7 @@
     <title>Home</title>
 </head>
 <!-- onresize="setCanvasStartingCoords()" -->
+
 <body onload="init()">
     <header>
         <div class="screen" onclick="toggleMenu(event)"></div>
@@ -48,59 +49,59 @@
 
             </section>
         </section>
-        <section class="memeEditor" style="display: none;">
+        <section id="editor" class="memeEditor" style="display: none;">
             <section class="editBtns">
-            <nav>
-            <label>Edit Text
-                <section>
-                    <input type="text" class="inpt-txt1 editctrl inputText" placeholder="Enter your text here" onkeyup="writeText(this)"
-                        data-idx="1">
-                    <button type="button" class="btn editctrl" onclick="updateFontSize(this)" data-input="1">+</button>
-                    <button type="button" class="btn editctrl" onclick="updateFontSize(this)" data-input="1">-</button>
-                </section>
-                
-                <section style="display:flex;justify-content: space-between;">
-                <section >
-                    <i class="fas fa-align-left editctrl" onclick="alignText('left')"></i>
-                    <i class="fas fa-align-center editctrl" onclick="alignText('center')"></i>
-                    <i class="fas fa-align-right editctrl" onclick="alignText('right')" ></i>
-                </section>
-                <section>
-                    <i class="fas fa-arrow-right editctrl" onclick="moveLine('right')"></i>
-                    <i class="fas fa-arrow-left editctrl" onclick="moveLine('left')"></i>
-                    <i class="fas fa-arrow-up editctrl" onclick="moveLine('up')"></i>
-                    <i class="fas fa-arrow-down editctrl" onclick="moveLine('down')"></i>
-                </section>
-                 </section>
-                 <section>
-                    <label>
-                        <input class ="editctrl" type="checkbox" onclick="updateTextShadow(this)" data-checkBox="1">
-                        Text Shadow
-                    </label>
-                    <input type="color" class="colorPicker editctrl" style="border:0;height:20px;width:20px;" value="#313131" data-inputColor="1"
-                        onchange="updateFontColor(this)">
-                </section>
-                <section>
-                    <select onchange="updateFontFamily(this.value)">
-                        <option>select font family</option>
-                        <option value="Arial">Arial</option>
-                        <option value="mono">mono</option>
-                        <option value="Impact">Impact</option>
-                    </select>
-                </section>
-                <section>
-                    <button class ="editctrl addline" onclick="onAdding()">add new line</button>
-                    <button class ="editctrl" onclick="onDeleteLine()" title="Click an item and then click me for delet">delete</button>
-                </section>
+                <nav>
+                    <label>Edit Text
+                        <section>
+                            <input type="text" class="inpt-txt1 editctrl inputText" placeholder="Enter your text here"
+                                onkeyup="writeText(this)" data-idx="1">
+                            <button type="button" class="btn editctrl" onclick="updateFontSize(this)" data-input="1">+</button>
+                            <button type="button" class="btn editctrl" onclick="updateFontSize(this)" data-input="1">-</button>
+                        </section>
 
-                <section>
-                    <button class ="editctrl" name="save" class="save editctrl"><a onclick="downloadMeme(this)">Save</a></button>
-                    <button onclick="showGallery()">Back To Gallery</button>
-                </section>
-            </label>
-            </nav>
+                        <section style="display:flex;justify-content: space-between;">
+                            <section>
+                                <i class="fas fa-align-left editctrl" onclick="alignText('left')"></i>
+                                <i class="fas fa-align-center editctrl" onclick="alignText('center')"></i>
+                                <i class="fas fa-align-right editctrl" onclick="alignText('right')"></i>
+                            </section>
+                            <section>
+                                <i class="fas fa-arrow-right editctrl" onclick="moveLine('right')"></i>
+                                <i class="fas fa-arrow-left editctrl" onclick="moveLine('left')"></i>
+                                <i class="fas fa-arrow-up editctrl" onclick="moveLine('up')"></i>
+                                <i class="fas fa-arrow-down editctrl" onclick="moveLine('down')"></i>
+                            </section>
+                        </section>
+                        <section>
+                            <label>
+                                <input class="editctrl" type="checkbox" onclick="updateTextShadow(this)" data-checkBox="1">
+                                Text Shadow
+                            </label>
+                            <input type="color" class="colorPicker editctrl" style="border:0;height:20px;width:20px;"
+                                value="#313131" data-inputColor="1" onchange="updateFontColor(this)">
+                        </section>
+                        <section>
+                            <select onchange="updateFontFamily(this.value)">
+                                <option>select font family</option>
+                                <option value="Arial">Arial</option>
+                                <option value="mono">mono</option>
+                                <option value="Impact">Impact</option>
+                            </select>
+                        </section>
+                        <section>
+                            <button class="editctrl addline" onclick="onAdding()">add new line</button>
+                            <button class="editctrl" onclick="onDeleteLine()" title="Click an item and then click me for delet">delete</button>
+                        </section>
+
+                        <section>
+                            <button class="editctrl" name="save" class="save editctrl"><a onclick="downloadMeme(this)">Save</a></button>
+                            <button onclick="showGallery()">Back To Gallery</button>
+                        </section>
+                    </label>
+                </nav>
             </section>
-            <div class="canvasHolder"><canvas id="memeCanvas" onclick="handleLineText(event)"></canvas></div>
+            <div id="holder" class="canvasHolder"><canvas id="memeCanvas" onclick="handleLineText(event)"></canvas></div>
 
         </section>
     </main>
