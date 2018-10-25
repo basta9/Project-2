@@ -154,3 +154,29 @@ cursor: pointer;
     display: flex;
     flex-direction: column;
 }
+.actions-btns:first-child{
+    margin: 0 auto;
+}
+
+@media (max-width: 800px) {
+.container{
+    width: 100%;
+    margin: 0;  } 
+
+.actions-btns{
+    flex-direction: row;
+    align-items: center;
+    height: 28px;
+    padding: 10px;
+    line-height: 5px;
+    margin: 2%;
+}
+.actions-btns button{
+    padding: 10px; 
+    margin: 4px;
+}
+.inputText{
+    height: 25px;
+}
+
+}
