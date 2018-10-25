@@ -1,6 +1,7 @@
 'use strict';
 
 function init() {
+<<<<<<< HEAD
     gImgs = [];
 
     for (let i = 1; i < 26; i++) {
@@ -113,24 +114,47 @@ function createImg(idx) {
         url: `img/${idx}.jpg`,
         keywords: currWords
     };
+=======
+    
+    createImages();
+    renderGallery(gImgs);
+    
+    elMemeEditor = document.querySelector('.memeEditor');
+    gCanvas = document.querySelector('#memeCanvas');
+    gCtx = gCanvas.getContext('2d');
+    elGallery = document.querySelector('.galleryWrap');
+
+    setCanvasSize();
+>>>>>>> 5dd92dd93bffe01725bcaac255205bf1114c449f
 }
 
-function renderGallery(images) {
+function renderGallery() {
 
-    var strHtml = '';
-    for (let i = 0; i < images.length; i++) {
+    var strHtml = '',images = gImgs;
 
-        strHtml += `<img src="${images[i].url}" 
-        alt="image of ${images[i].keywords[0]}"  
-        data-img = '${images[i].id}'
+    strHtml = images.map(function(img,idx){
+        return `<img src="${img.url}" 
+        alt="image of ${img.keywords[0]}"  
+        data-img = '${img.id}'
         onclick="openEditorOfMeme(this)"> \n`;
-    }
+    });
 
+    strHtml = strHtml.join('');
     strHtml += `<div class="box">
                     <img src="img/add-pic.png" alt=""> 
                     <input type="file" class="file" name="image" onchange="onFileInputChange(event)" />
                 </div>`
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5dd92dd93bffe01725bcaac255205bf1114c449f
     document.querySelector('.gallery').innerHTML = strHtml;
+}
+
+
+function showGallery() {
+    elMemeEditor.style.display = "none";
+    elGallery.style.display = "block";
 }
 
 function onSearchImg(searchKey) {
@@ -144,6 +168,7 @@ function onSearchImg(searchKey) {
 
 function onFileInputChange(ev) {
     handleImageFromInput(ev, renderCanvas)
+<<<<<<< HEAD
 }
 
 // function toggleMenu(ev) {
@@ -265,4 +290,6 @@ function alignText(direction) {
     console.log('I was clicked to the ', direction);
     gMeme.txts[0].alignText = direction;
     renderCanvas();
+=======
+>>>>>>> 5dd92dd93bffe01725bcaac255205bf1114c449f
 }
