@@ -29,6 +29,16 @@ function getImagesCount() {
     return gImgs.length;
 }
 
+function pagination(goNextPrev){
+
+    var elInputTxt = document.querySelector('.inputText');
+    var elInputClr = document.querySelector('.colorPicker');
+    // if()
+    elInputTxt.value = gMeme.txts[currLine].line;
+    elInputClr.value = gMeme.txts[currLine].color;
+    
+}
+
 function handleImageFromInput(ev, onImageReady) {
     document.querySelector('.share-container').innerHTML = ''
     var reader = new FileReader();
