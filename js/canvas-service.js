@@ -30,7 +30,6 @@ function deleteLine(lineId) {
     if (lineId >= 0) {
         gMeme.txts.splice(lineId, 1);
         saveToStorage(KEY_gMEM, gMeme);
-        gCurrLine--;
     }
 }
 

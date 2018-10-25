@@ -84,8 +84,7 @@ function moveLine(dir) {
 function writeText(elInput) {
 
     elInput.style.backgroundColor = "#ffffff";
-    if (!gMeme.txts.length) resetFirstLine();
-
+    if (!gMeme.txts.length)  gMeme.txts.push(createLine(elInput.value));
     gMeme.txts[gCurrLine].line = elInput.value;
 
     renderCanvas();

@@ -101,7 +101,9 @@ function pagination(goNextPrev) {
 }
 
 function onDeleteLine() {
+    
     deleteLine(gCurrLine);
+    elInputTxt.value = '';
     renderCanvas();
 }
 
