@@ -5,16 +5,18 @@ function init() {
     createImages();
     renderGallery(gImgs);
 
-    elMemeEditor = document.querySelector('.memeEditor');
+    //global var
+    gElMemeEditor = document.querySelector('.memeEditor');
     gCanvas = document.querySelector('#memeCanvas');
     gCtx = gCanvas.getContext('2d');
-    elGallery = document.querySelector('.galleryWrap');
+    gElGallery = document.querySelector('.galleryWrap');
 
     setCanvasSize();
 }
 
 function renderGallery(images) {
-    //for searching
+    //this function gets an filterd images var only if the gallery is searched
+    //if not uses the whole img array 
     if (!images) {
         images = gImgs;
     }
@@ -37,6 +39,7 @@ function renderGallery(images) {
 }
 
 function onSearchImg(searchKey) {
+    //for manual input
     if (!searchKey) {
         searchKey = document.querySelector('#search').value;
     }

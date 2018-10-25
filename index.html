@@ -15,7 +15,7 @@
     <header>
         <div class="screen" onclick="toggleMenu(event)"></div>
         <section class="header-wraper container">
-            <div class="logo">
+            <div class="logo" onclick="showGallery()">
                 Meme Creator
             </div>
             <nav class="main-nav" onclick="toggleMenu(event)">
@@ -106,7 +106,8 @@
             </label>
             </nav>
             </section>
-            <div class="canvasHolder"><canvas id="memeCanvas" onclick="handleLineText(event)"></canvas></div>
+            <canvas id="memeCanvas" width="1000" height="1000" style="width:100%; height:100%" onclick="handleLineText(event)"></canvas>
+            <!-- <div class="canvasHolder"><canvas id="memeCanvas" onclick="handleLineText(event)"></canvas></div> -->
 
         </section>
     </main>
@@ -116,7 +117,7 @@
     <script src="js/main-canvas.js"></script>
     <script src="js/main.js"></script>
     <script src="js/util-service.js"></script>
-    <script src="js/nav-service.js"></script>
+    <script src="js/nav-main.js"></script>
 </body>
 
 </html>
