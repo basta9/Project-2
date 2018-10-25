@@ -12,18 +12,18 @@ crossorigin="anonymous">
 </head>
 <!-- onresize="setCanvasStartingCoords()" -->
 <body onload="init()">
-<header>
-<div class="screen" onclick="toggleMenu(event)"></div>
-<section class="header-wraper container">
-    <div class="logo">
-        Meme Creator
-    </div>
-    <nav class="main-nav" onclick="toggleMenu(event)">
-        <ul class="nav-list">
-            <li class="nav-item" onclick="goToAbout(event)">About</li>
-            <li class="nav-item" onclick="goToContact(event)">Contact</li>
-        </ul>
-    </nav>
+    <header>
+        <div class="screen" onclick="toggleMenu(event)"></div>
+        <section class="header-wraper container">
+            <div class="logo" onclick="showGallery()">
+                Meme Creator
+            </div>
+            <nav class="main-nav" onclick="toggleMenu(event)">
+                <ul class="nav-list">
+                    <li class="nav-item" onclick="goToAbout(event)">About</li>
+                    <li class="nav-item" onclick="goToContact(event)">Contact</li>
+                </ul>
+            </nav>
 
     <button onclick="toggleMenu(event)" class="menu-icon">
         <i class="fas fa-bars"></i>
@@ -111,7 +111,7 @@ crossorigin="anonymous">
 <script src="js/main-canvas.js"></script>
 <script src="js/main.js"></script>
 <script src="js/util-service.js"></script>
-<script src="js/nav-service.js"></script>
+<script src="js/nav-main.js"></script>
 </body>
 
 </html>

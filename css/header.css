@@ -8,6 +8,10 @@
     text-shadow: 2px 2px black;
 }
 
+.logo:hover{
+opacity: .8;
+cursor: pointer;
+}
 header{
     height: 100px;
     background: cadetblue;

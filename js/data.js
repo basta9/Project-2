@@ -14,23 +14,23 @@ var gMeme = {
         bold: 1,
         x: 5,
         y: 25,
-        isActive:0
+        isActive: 0
     }],
-    memeImage:new Image()
+    memeImage: new Image()
 }
 
-var gImgs,currEl,currLine = 0;
-
-var elMemeEditor,elGallery;
-var gCanvas,gCtx,startX,startY;
+var gImgs, gCurrEl, gCurrLine = 0;
+var gElMemeEditor, gElGallery;
+var gCanvas, gCtx, gHoldImg;
+//  gStartX, gStartY;
 var gUserInput = [];
 
 var gCurrImg = {
     id: 0,
-    src:''
+    src: ''
 };
 
-var keyWords = [
+var gKeywords = [
     'kiss,love,boxing,box', //1
     'view,dance,dancing,happy', //2
     'trump,politic,rabbit', //3

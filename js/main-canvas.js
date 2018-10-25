@@ -9,8 +9,8 @@ function openEditorOfMeme(elImg) {
 
     gMeme.selectedImgId = +elImg.getAttribute("data-img");
 
-    elMemeEditor.style.display = "flex";
-    elGallery.style.display = "none";
+    gElMemeEditor.style.display = "flex";
+    gElGallery.style.display = "none";
 
     gMeme.memeImage.src = `img/${gMeme.selectedImgId}.jpg`;
 
@@ -23,8 +23,10 @@ function openEditorOfMeme(elImg) {
 
 //this function takes care of each change done by the user
 function renderCanvas() {
-    if (gMeme.selectedImgId.length > 5) {
+    // debugger
+    if (typeof (gMeme.selectedImgId) !== "number") {
         var img = gMeme.selectedImgId;
+        gMeme.selectedImgId = gHoldImg;
     } else {
         var img = new Image();
         img.src = `img/${gMeme.selectedImgId}.jpg`;
@@ -49,31 +51,31 @@ function renderCanvas() {
     }
 }
 
-function onAdding(){
+function onAdding() {
     var text = document.querySelector('.inputText');
     text.value = '';
     text.style.backgroundColor = "yellow";
 
     addLine('');
-    currLine++;
+    gCurrLine++;
 }
 
 function moveLine(dir) {
 
-    var line_width = gCtx.measureText(gMeme.txts[currLine].line).width;
+    var line_width = gCtx.measureText(gMeme.txts[gCurrLine].line).width;
 
     switch (dir) {
         case 'left':
-            if (gMeme.txts[currLine].x > 10) gMeme.txts[currLine].x -= 5;
+            if (gMeme.txts[gCurrLine].x > 10) gMeme.txts[gCurrLine].x -= 5;
             break;
         case 'right':
-            if (gMeme.txts[currLine].x < (gCanvas.width - line_width - 10)) gMeme.txts[currLine].x += 5;
+            if (gMeme.txts[gCurrLine].x < (gCanvas.width - line_width - 10)) gMeme.txts[gCurrLine].x += 5;
             break;
         case 'down':
-            if (gMeme.txts[currLine].y < gCanvas.height - gMeme.txts[currLine].size - 10) gMeme.txts[currLine].y += 5;
+            if (gMeme.txts[gCurrLine].y < gCanvas.height - gMeme.txts[gCurrLine].size - 10) gMeme.txts[gCurrLine].y += 5;
             break;
         case 'up':
-            if (gMeme.txts[currLine].y > 10) gMeme.txts[currLine].y -= 5;
+            if (gMeme.txts[gCurrLine].y > 10) gMeme.txts[gCurrLine].y -= 5;
             break;
     }
     renderCanvas();
@@ -84,30 +86,30 @@ function writeText(elInput) {
     elInput.style.backgroundColor = "#ffffff";
     if (!gMeme.txts.length) resetFirstLine();
 
-    gMeme.txts[currLine].line = elInput.value;
+    gMeme.txts[gCurrLine].line = elInput.value;
 
     renderCanvas();
 }
 
 function updateFontSize(elInput) {
-    if (elInput.innerHTML === '+' && gMeme.txts[currLine].x < 1000)
-        gMeme.txts[currLine].size += 10;
+    if (elInput.innerHTML === '+' && gMeme.txts[gCurrLine].x < 1000)
+        gMeme.txts[gCurrLine].size += 10;
     else if (elInput.innerHTML === '-')
-        gMeme.txts[currLine].size -= 10;
+        gMeme.txts[gCurrLine].size -= 10;
 
     renderCanvas();
 }
 
 function updateFontColor(elInput) {
-    if (elInput.value) gMeme.txts[currLine].color = elInput.value;
+    if (elInput.value) gMeme.txts[gCurrLine].color = elInput.value;
     renderCanvas();
 }
 
 function updateTextShadow(elInput) {
     if (elInput.checked === true)
-        gMeme.txts[currLine].text_shadow = 1;
+        gMeme.txts[gCurrLine].text_shadow = 1;
     else
-        gMeme.txts[currLine].text_shadow = 0;
+        gMeme.txts[gCurrLine].text_shadow = 0;
 
     renderCanvas();
 }
@@ -118,15 +120,15 @@ function downloadMeme(elLink) {
 }
 
 function updateFontFamily(fontFamily) {
-    gMeme.txts[currLine].family = fontFamily;
+    gMeme.txts[gCurrLine].family = fontFamily;
     renderCanvas();
 }
 
 function alignText(direction) {
-    gMeme.txts[currLine].alignText = direction;
-    if (gMeme.txts[currLine].alignText === 'right') gMeme.txts[currLine].x = (gCanvas.width - (gCtx.measureText(gMeme.txts[currLine].line).width + 5));
-    else if (gMeme.txts[currLine].alignText === 'center') gMeme.txts[currLine].x = (gCanvas.width - (gCtx.measureText(gMeme.txts[currLine].line).width)) / 2;
-    else gMeme.txts[currLine].x = 5;
+    gMeme.txts[gCurrLine].alignText = direction;
+    if (gMeme.txts[gCurrLine].alignText === 'right') gMeme.txts[gCurrLine].x = (gCanvas.width - (gCtx.measureText(gMeme.txts[gCurrLine].line).width + 5));
+    else if (gMeme.txts[gCurrLine].alignText === 'center') gMeme.txts[gCurrLine].x = (gCanvas.width - (gCtx.measureText(gMeme.txts[gCurrLine].line).width)) / 2;
+    else gMeme.txts[gCurrLine].x = 5;
 
     renderCanvas();
 }
@@ -140,14 +142,14 @@ function handleLineText(ev) {
     console.log('x', x)
     console.log('y', y)
 
-    currLine = getLineByCoords({ x, y });
+    gCurrLine = getLineByCoords({ x, y });
 }
 
 function onDeleteLine() {
 
-    deleteLine(currLine);
-    // currLine = null;
-    if (!gMeme.txts.length) currLine = 0;
+    deleteLine(gCurrLine);
+    // gCurrLine = null;
+    if (!gMeme.txts.length) gCurrLine = 0;
 
     renderCanvas();
 }
@@ -156,36 +158,36 @@ function onDeleteLine() {
 
 function handleMouseDown(ev) {
 
-    console.log('I am in here');
+    // console.log('I am in here');
 
     let rect = gCanvas.getBoundingClientRect();
-    startX = ev.clientX - rect.left;
-    startY = ev.clientY - rect.top;
-    // console.log(startX, startY);
+    gStartX = ev.clientX - rect.left;
+    gStartY = ev.clientY - rect.top;
+    // console.log(gStartX, gStartY);
 
     for (let i = 0; i < gMeme.txts.length; i++) {
         // console.log(gUserInput[i].x, gUserInput[i].y);
-        if (elHit(startX, startY, i)) {
+        if (elHit(gStartX, gStartY, i)) {
             console.log('in');
-            currEl = i;
-            gMeme.txts[i].gapX = startX - gMeme.txts[i].x;
-            gMeme.txts[i].gapY = gMeme.txts[i].y - startY;
+            gCurrEl = i;
+            gMeme.txts[i].gapX = gStartX - gMeme.txts[i].x;
+            gMeme.txts[i].gapY = gMeme.txts[i].y - gStartY;
         }
     }
 }
 
 // done dragging
 function handleMouseUp(ev) {
-    if (currEl === -1) return;
+    if (gCurrEl === -1) return;
     else {
-        gMeme.txts[currEl].isActive = 0;
-        currEl = -1;
+        gMeme.txts[gCurrEl].isActive = 0;
+        gCurrEl = -1;
     }
 }
 
 
 function handleMouseMove(ev) {
-    if (currEl < 0) {
+    if (gCurrEl < 0) {
         return;
     }
     let rect = gCanvas.getBoundingClientRect();
@@ -193,13 +195,13 @@ function handleMouseMove(ev) {
     let mouseY = ev.clientY - rect.top;
 
     // Put your mousemove stuff here
-    let newX = mouseX - startX;
-    let newY = mouseY - startY;
-    startX = mouseX;
-    startY = mouseY;
+    let newX = mouseX - gStartX;
+    let newY = mouseY - gStartY;
+    gStartX = mouseX;
+    gStartY = mouseY;
 
     // let canvasEl = gUserInput[currEl];
-    let canvasEl = gMeme.txts[currEl];
+    let canvasEl = gMeme.txts[gCurrEl];
     canvasEl.x += newX;
     canvasEl.y += newY;
     renderCanvas();
@@ -210,5 +212,3 @@ function elHit(x, y, idx) {
     return (canvasEl.x <= x && x <= canvasEl.x + canvasEl.width
         && canvasEl.y >= y && y >= canvasEl.y - canvasEl.font_size);
 }
-
-// ***********************************************************************

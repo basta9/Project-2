@@ -5,9 +5,11 @@
 
 main{
     display: flex;
-    padding: 40px;
+    flex-wrap: wrap;
     padding-bottom: 10px;
-    margin: 3%;
+    width: 60%;
+    text-align: center;
+    margin: auto;
 }
 .myImg{
     width: 200px;

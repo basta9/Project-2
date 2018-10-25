@@ -1,9 +1,11 @@
 'usr strict';
 
+//Navigation between HTML
 
 function goToMain(ev) {
     ev.stopPropagation();
     window.location.href = 'index.html';
+    resetFirstLine();
 }
 
 function toggleMenu(ev) {
@@ -26,7 +28,7 @@ function showGallery(ev) {
     if (ev) {
         ev.stopPropagation();
     }
-    // toggleMenu();
-    elMemeEditor.style.display = "none";
-    elGallery.style.display = "block";
+    gElMemeEditor.style.display = "none";
+    gElGallery.style.display = "block";
+    resetFirstLine();
 }

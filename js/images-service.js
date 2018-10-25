@@ -1,47 +1,43 @@
 'use strict';
 
 function createImages() {
-
+    //if saved in stroage takes it
     gImgs = getFromStorage(KEY_IMAGES);
 
+    //if not creartes a gallery
     if (!gImgs) {
         gImgs = [];
-        for (let i = 1; i <= keyWords.length; i++)  gImgs.push(createImg(i));
+        for (let i = 1; i <= gKeywords.length; i++)  gImgs.push(createImg(i));
     }
 }
 
 function createImg(idx) {
 
-    let currKeyWords = keyWords[idx - 1].split(',');
+    let currKeywords = gKeywords[idx - 1].split(',');
     return {
         id: idx,
         url: `img/${idx}.jpg`,
-        keywords: currKeyWords
+        keywords: currKeywords
     };
 }
 
-function addImage(img) {
-    gImgs.unshift(createImg(gImgs.length + 1));
-    saveToStorage(KEY_IMAGES, gImgs);
-}
-
-function getImagesCount() {
-    return gImgs.length;
-}
-
-
 function handleImageFromInput(ev) {
 
-
-
     var onImageReady = function renderCanvas(img) {
+        //draw img on canvas
         gCanvas.width = img.width;
         gCanvas.height = img.height;
         gCtx.drawImage(img, 0, 0);
+
+        //set max size var
         var MAX_WIDTH = 600;
         var MAX_HEIGHT = 600;
+
+        //take img original size
         var width = img.width;
         var height = img.height;
+
+        //arrange size if too big
         if (width > height) {
             if (width > MAX_WIDTH) {
                 height *= MAX_WIDTH / width;
@@ -53,56 +49,63 @@ function handleImageFromInput(ev) {
                 height = MAX_HEIGHT;
             }
         }
+        //set canvas accordingly
         gCanvas.width = width;
         gCanvas.height = height;
+        //store img in global
         gMeme.selectedImgId = img;
         gCtx.drawImage(img, 0, 0, width, height);
     }
 
-    elMemeEditor.style.display = "flex";
-    elGallery.style.display = "none";
+    //show canvas hide gallery
+    gElMemeEditor.style.display = "flex";
+    gElGallery.style.display = "none";
+
     var reader = new FileReader();
     reader.onload = function (event) {
         var img = new Image();
         img.src = event.target.result;
+        //global copy
+        gHoldImg = new Image();
+        gHoldImg.src = event.target.result;
+
         img.onload = onImageReady.bind(null, img);
     }
     reader.readAsDataURL(ev.target.files[0]);
 }
-// document.querySelector('.share-container').innerHTML = ''
-// function handleImageFromInput(ev, onImageReady) {
-
 
 
 function pagination(goNextPrev) {
 
+    if (gCurrLine + 1 > gMeme.txts.length || gCurrLine - 1 < 0) return;
+
     var elInputTxt = document.querySelector('.inputText');
     var elInputClr = document.querySelector('.colorPicker');
     var lineLen = gMeme.txts.length - 1;
-    
-    console.log('lineslen',lineLen);
-    console.log('currLine',currLine);
-    
-    if(goNextPrev === 'next')  currLine++;
-    else if(goNextPrev === 'prev')  currLine--;
-    
-    if(currLine < 0)    currLine = 0;
-    else if(currLine >= lineLen) currLine = lineLen -1;
 
-        if(gMeme.txts.length > 0){
-        elInputTxt.value = (gMeme.txts[currLine].line === '')?'Empty Line':gMeme.txts[currLine].line;
-        elInputClr.value = gMeme.txts[currLine].color;
+    console.log('lineslen', lineLen);
+    console.log('currLine', gCurrLine);
+
+    if (goNextPrev === 'next') gCurrLine++;
+    else if (goNextPrev === 'prev') gCurrLine--;
+
+    if (gCurrLine < 0) gCurrLine = 0;
+    else if (gCurrLine >= lineLen) gCurrLine = lineLen - 1;
+
+    if (gMeme.txts.length > 0) {
+        elInputTxt.value = (gMeme.txts[gCurrLine].line === '') ? 'Empty Line' : gMeme.txts[gCurrLine].line;
+        elInputClr.value = gMeme.txts[gCurrLine].color;
     }
-    
+
 }
 
 function onDeleteLine() {
-    deleteLine(currLine);
-    currLine--;
+    deleteLine(gCurrLine);
+    gCurrLine--;
     renderCanvas();
 }
 
-
+//return an arry of img according to search input
 function filterImg(key) {
     return gImgs.filter(function (currImg) {
         for (let i = 0; i < currImg.keywords.length; i++) {
