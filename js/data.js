@@ -1,5 +1,5 @@
 'use strict'
-
+const KEY_IMAGES = 'memeImages';
 var gMeme = {
 
     selectedImgId: 1,
@@ -12,16 +12,16 @@ var gMeme = {
         color: '#313131',
         width: 0,
         bold: 1,
-        x: 50,
-        y: 50,
+        x: 5,
+        y: 25,
         isActive:0
     }],
     memeImage:new Image()
 }
+/*
 
-var canvasStartingPointX,canvasStartingPointY;
-
-var gImgs,currEl;
+*/
+var gImgs,currEl,currLine = 0;
 
 var elMemeEditor,elGallery;
 var gCanvas,gCtx,startX,startY;
@@ -57,4 +57,4 @@ var keyWords = [
     'lord of the rings, chill', //22
     'oprah, happy', //23
     'star trek, laugh, joke', //24
-    'potin, politic'];
+    'potin, politic'];//25
