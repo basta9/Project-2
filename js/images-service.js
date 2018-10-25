@@ -1,6 +1,7 @@
 'use strict';
 
 function createImages() {
+
     gImgs = getFromStorage(KEY_IMAGES);
 
     if(!gImgs){
@@ -9,7 +10,7 @@ function createImages() {
     }
 }
 
-function createImg(idx) {    
+function createImg(idx) { 
 
     let currKeyWords = keyWords[idx - 1].split(',');
     return {

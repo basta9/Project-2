@@ -51,6 +51,7 @@ function onAdding(){
     var text = document.querySelector('.inputText');
     text.value = '';
     text.style.backgroundColor = "yellow";
+
     addLine('');
     currLine++;
 }
@@ -84,6 +85,7 @@ function writeText(elInput) {
     gMeme.txts[currLine].line = elInput.value;
 
     renderCanvas();
+    add_option();
 }
 
 function updateFontSize(elInput) {
@@ -147,6 +149,19 @@ function onDeleteLine(){
     if(!gMeme.txts.length) currLine = 0;
     
     renderCanvas();
+}
+
+//this function reads from gIms array and 
+//upload the line into a select box for deleting
+function add_option(){
+    var elSelectBox = document.querySelector('#delete_lines');
+    var sHTMLs = `<option>Select line to delete</option>`
+
+    sHTMLs += gMeme.txts.map(function(line,idx){
+        return `<option id = '${idx}' value = "${line}">Select line to delete</option>`
+    })
+
+    elSelectBox.innerHTML = sHTMLs.join('');;
 }
 // ***********************************************************************
 
