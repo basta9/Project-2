@@ -85,7 +85,7 @@ cursor: pointer;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #a45f5f;
+    background-color:#f2f2f2;
     height: 5%;
   }
   .canvasHolder{
@@ -132,4 +132,22 @@ cursor: pointer;
 }
 .colorPicker{
     border:0;height:20px;width:20px;
+}
+
+.border{
+    border: 3px solid #6f6b6a93;
+}
+
+.text-styling-btns{
+    border: 3px solid #6f6b6a93;
+    border-radius: 5%;
+    margin-top: 2%;
+}
+.directions{
+    display:flex;
+    justify-content: space-between;
+    border: 3px solid #6f6b6a93;
+    border-radius: 5%;
+    margin-top: 2%;
+    margin-bottom: 1%;
 }

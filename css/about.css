@@ -7,6 +7,7 @@ main{
     display: flex;
     padding: 40px;
     padding-bottom: 10px;
+    margin: 3%;
 }
 .myImg{
     width: 200px;
