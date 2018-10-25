@@ -71,7 +71,6 @@ cursor: pointer;
 cursor: pointer;
 }
 
-
 .memeEditor{
     display: flex;
     flex-direction: column;
@@ -150,4 +149,8 @@ cursor: pointer;
     border-radius: 5%;
     margin-top: 2%;
     margin-bottom: 1%;
+}
+.actions-btns{
+    display: flex;
+    flex-direction: column;
 }
