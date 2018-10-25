@@ -23,6 +23,7 @@
                 <ul class="nav-list">
                     <li class="nav-item" onclick="goToAbout(event)">About</li>
                     <li class="nav-item" onclick="goToContact(event)">Contact</li>
+                    <li class="nav-item" onclick="showGallery(event)">Gallery</li>
                 </ul>
             </nav>
 
@@ -49,13 +50,15 @@
 
             </section>
         </section>
-        <section id="editor" class="memeEditor" style="display: none;">
+        <section class="memeEditor" style="display: none;">
             <section class="editBtns">
                 <nav>
                     <label>Edit Text
                         <section>
+
                             <input type="text" class="inpt-txt1 editctrl inputText" placeholder="Enter your text here"
                                 onkeyup="writeText(this)" data-idx="1">
+
                             <button type="button" class="btn editctrl" onclick="updateFontSize(this)" data-input="1">+</button>
                             <button type="button" class="btn editctrl" onclick="updateFontSize(this)" data-input="1">-</button>
                         </section>
@@ -78,8 +81,8 @@
                                 <input class="editctrl" type="checkbox" onclick="updateTextShadow(this)" data-checkBox="1">
                                 Text Shadow
                             </label>
-                            <input type="color" class="colorPicker editctrl" style="border:0;height:20px;width:20px;"
-                                value="#313131" data-inputColor="1" onchange="updateFontColor(this)">
+                            <input type="color" class="colorPicker editctrl" value="#313131" data-inputColor="1"
+                                onchange="updateFontColor(this)">
                         </section>
                         <section>
                             <select onchange="updateFontFamily(this.value)">
@@ -90,8 +93,12 @@
                             </select>
                         </section>
                         <section>
+                            <button class="editctrl nextLine" onclick="pagination('next')">Next Line</button>
+                            <button class="editctrl prevLine" onclick="pagination('prev')">Previous Line</button>
+                        </section>
+                        <section>
                             <button class="editctrl addline" onclick="onAdding()">add new line</button>
-                            <button class="editctrl" onclick="onDeleteLine()" title="Click an item and then click me for delet">delete</button>
+                            <button class="editctrl" onclick="onDeleteLine()" title="delete">delete</button>
                         </section>
 
                         <section>
@@ -101,7 +108,7 @@
                     </label>
                 </nav>
             </section>
-            <div id="holder" class="canvasHolder"><canvas id="memeCanvas" onclick="handleLineText(event)"></canvas></div>
+            <div class="canvasHolder"><canvas id="memeCanvas" onclick="handleLineText(event)"></canvas></div>
 
         </section>
     </main>

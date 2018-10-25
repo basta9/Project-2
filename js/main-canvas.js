@@ -17,34 +17,19 @@ function openEditorOfMeme(elImg) {
     gMeme.memeImage.onload = function () {
         gCanvas.width = this.width;
         gCanvas.height = this.height;
-        //ratio
-        let ra = gCanvas.height / gCanvas.width;
-
-        // let wrapHeight = wrapWidth * ra;
-        // editor height according to canvas height
-        // setInterval(function () {
-
-            let wrapWidth = document.getElementById('editor').offsetWidth;
-            let elEditor = document.getElementById('editor');
-            let wrapHeight = document.getElementById('holder').offsetHeight;
-            elEditor.style.height = wrapWidth * ra + 'px';
-            // elEditor.style.width = wrapHeight / ra + 'px';
-            // debugger
-
-        // }, 10);
-
-
         gCtx.drawImage(gMeme.memeImage, 0, 0, gCanvas.width, gCanvas.height)
     }
 }
 
 //this function takes care of each change done by the user
 function renderCanvas() {
-
-    var img = new Image();
-    img.src = `img/${gMeme.selectedImgId}.jpg`;
-    gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
-
+    if (gMeme.selectedImgId.length > 5) {
+        var img = gMeme.selectedImgId;
+    } else {
+        var img = new Image();
+        img.src = `img/${gMeme.selectedImgId}.jpg`;
+        gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
+    }
     for (var i = 0; i < gMeme.txts.length; i++) {
 
         gCtx.font = `${gMeme.txts[i].bold} ${gMeme.txts[i].size}px ${gMeme.txts[i].family}`;
@@ -68,6 +53,7 @@ function onAdding() {
     var text = document.querySelector('.inputText');
     text.value = '';
     text.style.backgroundColor = "yellow";
+
     addLine('');
     currLine++;
 }
@@ -165,6 +151,7 @@ function onDeleteLine() {
 
     renderCanvas();
 }
+
 // ***********************************************************************
 
 function handleMouseDown(ev) {

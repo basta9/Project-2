@@ -16,21 +16,18 @@ var gMeme = {
         y: 25,
         isActive:0
     }],
-    memeImage: new Image()
+    memeImage:new Image()
 }
-/*
 
-*/
 var gImgs,currEl,currLine = 0;
 
-var elMemeEditor, elGallery;
-var gIsClicked = false;
-var gCanvas, gCtx, startX, startY;
+var elMemeEditor,elGallery;
+var gCanvas,gCtx,startX,startY;
 var gUserInput = [];
 
 var gCurrImg = {
     id: 0,
-    src: ''
+    src:''
 };
 
 var keyWords = [
