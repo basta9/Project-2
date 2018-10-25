@@ -78,10 +78,11 @@ function handleImageFromInput(ev) {
 
 function pagination(goNextPrev) {
 
-    if (gCurrLine + 1 > gMeme.txts.length || gCurrLine - 1 < 0) return;
+    if (!gMeme.txts.length) return;
 
     var elInputTxt = document.querySelector('.inputText');
     var elInputClr = document.querySelector('.colorPicker');
+    
     var lineLen = gMeme.txts.length - 1;
 
     console.log('lineslen', lineLen);
@@ -102,7 +103,6 @@ function pagination(goNextPrev) {
 
 function onDeleteLine() {
     deleteLine(gCurrLine);
-    gCurrLine--;
     renderCanvas();
 }
 
