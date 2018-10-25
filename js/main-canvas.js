@@ -28,8 +28,8 @@ function renderCanvas() {
     } else {
         var img = new Image();
         img.src = `img/${gMeme.selectedImgId}.jpg`;
-        gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
     }
+    gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
     for (var i = 0; i < gMeme.txts.length; i++) {
 
         gCtx.font = `${gMeme.txts[i].bold} ${gMeme.txts[i].size}px ${gMeme.txts[i].family}`;

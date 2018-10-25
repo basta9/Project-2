@@ -29,7 +29,7 @@ function showGallery(ev) {
     if (ev) {
         ev.stopPropagation();
     }
-    toggleMenu();
+    // toggleMenu();
     elMemeEditor.style.display = "none";
     elGallery.style.display = "block";
 }

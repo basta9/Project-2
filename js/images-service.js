@@ -79,23 +79,26 @@ function pagination(goNextPrev) {
     var elInputTxt = document.querySelector('.inputText');
     var elInputClr = document.querySelector('.colorPicker');
     var lineLen = gMeme.txts.length - 1;
+    
+    console.log('lineslen',lineLen);
+    console.log('currLine',currLine);
+    
+    if(goNextPrev === 'next')  currLine++;
+    else if(goNextPrev === 'prev')  currLine--;
+    
+    if(currLine < 0)    currLine = 0;
+    else if(currLine >= lineLen) currLine = lineLen -1;
 
-    console.log('lineslen', lineLen);
-    console.log('currLine', currLine);
-
-    if (goNextPrev === 'next') currLine++;
-    else if (goNextPrev === 'prev') currLine--;
-
-    if (currLine < 0) currLine = 0;
-    else if (currLine >= lineLen) currLine = lineLen - 1;
-
-    elInputTxt.value = (gMeme.txts[currLine].line === '') ? 'Empty Line' : gMeme.txts[currLine].line;
-    elInputClr.value = gMeme.txts[currLine].color;
-
+        if(gMeme.txts.length > 0){
+        elInputTxt.value = (gMeme.txts[currLine].line === '')?'Empty Line':gMeme.txts[currLine].line;
+        elInputClr.value = gMeme.txts[currLine].color;
+    }
+    
 }
 
 function onDeleteLine() {
     deleteLine(currLine);
+    currLine--;
     renderCanvas();
 }
 
