@@ -29,20 +29,11 @@ function getImagesCount() {
     return gImgs.length;
 }
 
-function pagination(goNextPrev) {
-
-    var elInputTxt = document.querySelector('.inputText');
-    var elInputClr = document.querySelector('.colorPicker');
-
-    console.log('currLine', currLine);
-
-    // elInputTxt.value = gMeme.txts[currLine].line;
-    // elInputClr.value = gMeme.txts[currLine].color;
-
-}
-
 
 function handleImageFromInput(ev) {
+
+
+
     var onImageReady = function renderCanvas(img) {
         gCanvas.width = img.width;
         gCanvas.height = img.height;
@@ -71,7 +62,6 @@ function handleImageFromInput(ev) {
     elMemeEditor.style.display = "flex";
     elGallery.style.display = "none";
     var reader = new FileReader();
-
     reader.onload = function (event) {
         var img = new Image();
         img.src = event.target.result;
@@ -79,6 +69,36 @@ function handleImageFromInput(ev) {
     }
     reader.readAsDataURL(ev.target.files[0]);
 }
+// document.querySelector('.share-container').innerHTML = ''
+// function handleImageFromInput(ev, onImageReady) {
+
+
+
+function pagination(goNextPrev) {
+
+    var elInputTxt = document.querySelector('.inputText');
+    var elInputClr = document.querySelector('.colorPicker');
+    var lineLen = gMeme.txts.length - 1;
+
+    console.log('lineslen', lineLen);
+    console.log('currLine', currLine);
+
+    if (goNextPrev === 'next') currLine++;
+    else if (goNextPrev === 'prev') currLine--;
+
+    if (currLine < 0) currLine = 0;
+    else if (currLine >= lineLen) currLine = lineLen - 1;
+
+    elInputTxt.value = (gMeme.txts[currLine].line === '') ? 'Empty Line' : gMeme.txts[currLine].line;
+    elInputClr.value = gMeme.txts[currLine].color;
+
+}
+
+function onDeleteLine() {
+    deleteLine(currLine);
+    renderCanvas();
+}
+
 
 function filterImg(key) {
     return gImgs.filter(function (currImg) {

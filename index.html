@@ -55,7 +55,6 @@
                 <nav>
                     <label>Edit Text
                         <section>
-
                             <input type="text" class="inpt-txt1 editctrl inputText" placeholder="Enter your text here"
                                 onkeyup="writeText(this)" data-idx="1">
 
@@ -101,14 +100,14 @@
                             <button class="editctrl" onclick="onDeleteLine()" title="delete">delete</button>
                         </section>
 
-                        <section>
-                            <button class="editctrl" name="save" class="save editctrl"><a onclick="downloadMeme(this)">Save</a></button>
-                            <button onclick="showGallery()">Back To Gallery</button>
-                        </section>
-                    </label>
-                </nav>
+                        <input type="text" class="inpt-txt1 editctrl inputText" placeholder="Enter your text here"
+                            onkeyup="writeText(this)" data-idx="1">
+
+                        <button type="button" class="btn editctrl" onclick="updateFontSize(this)" data-input="1">+</button>
+                        <button type="button" class="btn editctrl" onclick="updateFontSize(this)" data-input="1">-</button>
             </section>
-            <div class="canvasHolder"><canvas id="memeCanvas" onclick="handleLineText(event)"></canvas></div>
+        </section>
+        <div class="canvasHolder"><canvas id="memeCanvas" onclick="handleLineText(event)"></canvas></div>
 
         </section>
     </main>
