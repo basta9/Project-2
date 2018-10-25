@@ -25,8 +25,8 @@ function openEditorOfMeme(elImg) {
 function renderCanvas() {
     // debugger
     if (typeof (gMeme.selectedImgId) !== "number") {
-        var img = gMeme.selectedImgId;
         gMeme.selectedImgId = gHoldImg;
+        var img = gMeme.selectedImgId;
     } else {
         var img = new Image();
         img.src = `img/${gMeme.selectedImgId}.jpg`;

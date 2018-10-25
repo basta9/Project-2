@@ -54,6 +54,7 @@ function handleImageFromInput(ev) {
         gCanvas.height = height;
         //store img in global
         gMeme.selectedImgId = img;
+        // debugger
         gCtx.drawImage(img, 0, 0, width, height);
     }
 
